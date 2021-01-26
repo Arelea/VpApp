@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ASPProjects\\AppNov14\\AppNov14\\AppNov14.csproj": {}
+    "C:\\Users\\Gregory\\Documents\\GitHub\\VpApp\\AppNov14\\AppNov14\\AppNov14.csproj": {}
   },
   "projects": {
-    "D:\\ASPProjects\\AppNov14\\AppNov14\\AppNov14.csproj": {
+    "C:\\Users\\Gregory\\Documents\\GitHub\\VpApp\\AppNov14\\AppNov14\\AppNov14.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ASPProjects\\AppNov14\\AppNov14\\AppNov14.csproj",
+        "projectUniqueName": "C:\\Users\\Gregory\\Documents\\GitHub\\VpApp\\AppNov14\\AppNov14\\AppNov14.csproj",
         "projectName": "AppNov14",
-        "projectPath": "D:\\ASPProjects\\AppNov14\\AppNov14\\AppNov14.csproj",
+        "projectPath": "C:\\Users\\Gregory\\Documents\\GitHub\\VpApp\\AppNov14\\AppNov14\\AppNov14.csproj",
         "packagesPath": "C:\\Users\\Gregory\\.nuget\\packages\\",
-        "outputPath": "D:\\ASPProjects\\AppNov14\\AppNov14\\obj\\",
+        "outputPath": "C:\\Users\\Gregory\\Documents\\GitHub\\VpApp\\AppNov14\\AppNov14\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"
