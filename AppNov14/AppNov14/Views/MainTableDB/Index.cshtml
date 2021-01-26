@@ -1,0 +1,58 @@
+﻿@model AppNov14.Models.MainTableDB
+
+@{
+    ViewData["Title"] = "Главное меню";
+}
+
+<h1>Главное меню</h1>
+
+<br />
+<h2>Работа с базой</h2>
+<br />
+<a class="btn btn-sm btn-primary" asp-controller="MainTableDB" asp-action="CreateIncomingOrder">Поступление нового сырья на склад</a>
+<br />
+<hr />
+<a class="btn btn-sm btn-primary" asp-controller="MainTableDB" asp-action="CreateOutcomingOrder">Списания сырья на производство</a>
+<br />
+<hr />
+<a class="btn btn-sm btn-primary" asp-controller="MainTableDB" asp-action="CreateReturnOrder">Возвращение сырья на склад с производства</a>
+<br />
+<hr />
+<a class="btn btn-sm btn-primary" asp-controller="Warehouse135" asp-action="CreateWarehouseFields">Добавить новое наименование сырья</a>
+<br />
+<hr />
+<a class="btn btn-sm btn-primary" asp-controller="MainTableDB" asp-action="AddPartyName">Добавить новое наименование партии</a>
+<br />
+<hr />
+@if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
+{
+    <a class="btn btn-sm btn-primary" asp-controller="Warehouse135" asp-action="CreateWarehouseFieldType">Добавить новый тип сырья</a>
+    <br />
+    <hr />
+    <a class="btn btn-sm btn-primary" asp-controller="MainTableDB" asp-action="EditDeleteAllData">Редактирование и удаление</a>
+    <br />
+    <hr />
+}
+
+<h2>Последние записи и склад</h2>
+<br />
+<a class="btn btn-sm btn-primary" asp-controller="MainTableDB" asp-action="MyLastAddings">Мои последние записи</a>
+<br />
+<hr />
+<a class="btn btn-sm btn-primary" asp-controller="MainTableDB" asp-action="EveryoneLastAddings">Общие последние записи</a>
+<br />
+<hr />
+<a class="btn btn-sm btn-primary" asp-controller="Warehouse135" asp-action="WarehouseViewAll">Склад сырья</a>
+<br />
+<hr />
+<h2>Поиск и Excel выписка</h2>
+<br />
+<a class="btn btn-sm btn-primary" asp-controller="Search" asp-action="Index">Поиск</a>
+<br />
+<hr />
+<a class="btn btn-sm btn-primary" asp-controller="MainTableDB" asp-action="ImportExcelFile">Excel выписка</a>
+<br />
+<hr />
+<a class="btn btn-sm btn-primary" asp-controller="MainTableDB" asp-action="GetPartiesInfo">Состав партии</a>
+<br />
+<hr />

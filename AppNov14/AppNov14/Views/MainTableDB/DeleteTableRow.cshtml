@@ -1,0 +1,110 @@
+﻿@model AppNov14.Models.MainTableDB
+
+    @{
+    ViewData["Title"] = "Удаление записи";
+    }
+
+    <h1>Удаление записи</h1>
+
+    <h3>Вы уверены, что хотите удалить эту запись?</h3>
+    <div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Gild)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Gild)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TypeOfMaterial)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TypeOfMaterial)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NameOfTypeMaterial)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NameOfTypeMaterial)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>    
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Provider)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Provider)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Document)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Document)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NumberOfDocument)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NumberOfDocument)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Indexation)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Indexation)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Line)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Line)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DocDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DocDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Employee)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Employee)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.IpAdress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IpAdress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AutoDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AutoDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Remarks)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Remarks)
+        </dd>
+    </dl>
+
+    <form asp-action="DeleteTableRow">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Удалить" class="btn btn-danger" onclick="return confirm('Вы уверенны, что хотите удалить строку?')"/> |
+    <a class="btn btn-danger" asp-action="EditDeleteAllData" asp-controller="MainTableDB">Назад</a>
+    </form>
+    </div> 

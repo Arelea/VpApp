@@ -1,0 +1,61 @@
+﻿@model AppNov14.Models.MainTableParties
+
+@{
+    ViewData["Title"] = "Добавление нового типа партии";
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery-ui.js"></script>
+<link href="~/jquery-ui.css" rel="stylesheet" />
+<h1>Добавление нового типа партии</h1>
+<script type="text/javascript">
+
+    $(function () {
+        $("#Document").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: '/MainTableDB/GetNamePartyJson',
+                    type: 'POST',
+                    cache: false,
+                    data: { type: $("#Document").val(), Prefix: request.term},
+                    dataType: 'json',
+
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return {
+                                value: item.value
+                            }
+                        }))
+                    }
+                });
+            },
+            error: function (response) { alert(response.responseText); },
+            failure: function (response) { alert(response.responseText); }
+
+        });
+    });
+ 
+</script>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddPartyName" autocomplete="on">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Document" class="control-label">Наименование партии</label>
+                <input asp-for="Document" class="form-control" />
+                <span asp-validation-for="Document" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" onclick="return confirm('Вы уверенны, что хотите добавить наименование партии?')">
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-outline-secondary" asp-controller="MainTableDB" asp-action="Index">Назад</a>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Главное сырьевое меню";
+}
+
+<h1>Поиск</h1>
+<br />
+<br />
+<hr />
+
+<div class="form-row">
+    <div class="form-group col-md-3">
+        <a class="btn btn-info" asp-controller="Search" asp-action="SerachInIncomingOrder">Поиск по приходному сырью</a>
+    </div>
+    <div class="form-group col-md-3">
+        <a class="btn btn-info" asp-controller="Search" asp-action="SerachInOutcomingOrder">Поиск по расходному сырью</a>
+    </div>
+    <div class="form-group col-md-3">
+        <a class="btn btn-info" asp-controller="Search" asp-action="SerachInReturnOrder">Поиск по возвратному сырью</a>
+    </div>
+</div>
+<hr />

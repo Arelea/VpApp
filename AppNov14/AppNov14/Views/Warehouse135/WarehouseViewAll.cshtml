@@ -1,0 +1,84 @@
+﻿
+@model AppNov14.Models.Warehouse135Model
+
+@{
+    ViewData["Title"] = "Складская таблица";
+}
+
+<h1 class="text-center">Складская таблица</h1>
+
+
+
+@{
+
+    int j = -1;
+}
+@foreach (var item in Model.listil)
+{
+    j++;
+
+    <div class="jumbotron">
+        <h4 class="text-center">@Model.list[j]</h4>
+    </div>
+
+    <table align="center" class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    #Id
+                </th>
+                <th>
+                    Тип материала
+                </th>
+                <th>
+                    Наименование типа материала
+                </th>
+                <th>
+                    Поставщик
+                </th>
+                <th>
+                    Производитель
+                </th>
+                <th>
+                    Остатки
+                </th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+            @for (int i = 0; i < item.Rows.Count; i++)
+
+            {
+                <tr>
+                    <td>
+                        @item.Rows[i]["Id"]
+                    </td>
+                    <td>
+                        @item.Rows[i]["TypeOfMaterial"]
+                    </td>
+                    <td>
+                        @item.Rows[i]["NameOfTypeMaterial"]
+                    </td>
+                    <td>
+                        @item.Rows[i]["Provider"]
+                    </td>
+                    <td>
+                        @item.Rows[i]["Manufacturer"]
+                    </td>
+                    <td>
+                        @item.Rows[i]["Leftovers"]
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+        <hr />
+        <br />
+}
+
+<br>
+<br>
+<a class="btn btn-outline-secondary" asp-controller="MainTableDB" asp-action="Index">Назад</a>
+<br />

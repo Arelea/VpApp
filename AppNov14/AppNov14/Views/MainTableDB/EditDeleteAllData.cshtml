@@ -1,0 +1,213 @@
+﻿@model AppNov14.Models.InnerModelToPost
+
+@{
+    ViewData["Title"] = "Редактирование";
+}
+
+
+<h1 class="text-center">Записи главной таблицы для редактирования</h1>
+
+
+<form asp-action="EditDeleteAllData">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="DateStart" class="control-label">От</label>
+            <input asp-for="DateStart" type="date"
+                   min="2010-01-01" max="2050-12-31" class="form-control" />
+            <span asp-validation-for="DateStart" class="text-danger"></span>
+        </div>
+
+        <div class="form-group col-md-4">
+            <label asp-for="DateFinish" class="control-label">До</label>
+            <input asp-for="DateFinish" type="date"
+                   min="2010-01-01" max="2050-12-31" class="form-control" />
+            <span asp-validation-for="DateFinish" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="NumberOfRecords" class="control-label">Количество последних записей</label>
+            <input asp-for="NumberOfRecords" class="form-control" />
+            <span asp-validation-for="NumberOfRecords" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-1">
+            <input type="submit" value="Найти" class="btn btn-primary">
+        </div>
+        <div class="form-group col-md-1">
+            <a class="btn btn-outline-secondary" asp-controller="MainTableDB" asp-action="Index">Назад</a>
+        </div>
+    </div>
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@if (Model.listil.Rows.Count == 0)
+{
+    <div class="is-invalid">
+        <h3 class="text-center">Записей нет</h3>
+    </div>
+}
+else
+{
+    <table align="center" class="table table-bordered">
+
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Удалить
+                </th>
+                <th>
+                    Изменить
+                </th>
+                <th>
+                    #Id
+                </th>
+                <th>
+                    Цех
+                </th>
+                <th>
+                    Тип материала
+                </th>
+                <th>
+                    Наименование типа материала
+                </th>
+                <th>
+                    Количество
+                </th>
+                <th>
+                    Остатки
+                </th>
+                <th>
+                    Поставщик
+                </th>
+                <th>
+                    Производитель
+                </th>
+                <th>
+                    ТТН / Наименование партии
+                </th>
+                <th>
+                    Номер документа / Номер партии
+                </th>
+                <th>
+                    Паспорт
+                </th>
+                <th>
+                    Линия
+                </th>
+                <th>
+                    Дата
+                </th>
+                <th>
+                    Имя сотрудника
+                </th>
+                <th>
+                    IP Адресс
+                </th>
+                <th>
+                    Авто дата
+                </th>
+                <th>
+                    Примечание
+                </th>
+                <th>
+                    Тип процедуры
+                </th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (int i = 0; i < Model.listil.Rows.Count; i++)
+
+            {
+            <tr>
+                <td>
+                    <a asp-action="DeleteTableRow" asp-route-id="@Convert.ToInt32(Model.listil.Rows[i]["Id"].ToString())" class="btn btn-danger">Delete</a>
+                </td>
+                <td>
+                    <a asp-action="EditTableRow" asp-route-id="@Convert.ToInt32(Model.listil.Rows[i]["Id"].ToString())" class="btn btn-warning">Edit</a>
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["Id"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["Gild"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["TypeOfMaterial"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["NameOfTypeMaterial"]
+                </td>
+
+                <td>
+                    @Model.listil.Rows[i]["Quantity"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["Leftovers"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["Provider"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["Manufacturer"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["Document"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["NumberOfDocument"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["Indexation"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["Line"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["DocDate"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["Employee"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["IpAdress"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["AutoDate"]
+                </td>
+                <td>
+                    @Model.listil.Rows[i]["Remarks"]
+                </td>
+                <td>
+                    @if (@Model.listil.Rows[i]["OperationType"].ToString() == "1")
+                    {
+                        Write("Приход");
+                    }
+                    else if (@Model.listil.Rows[i]["OperationType"].ToString() == "2")
+                    {
+                        Write("Расход");
+                    }
+                    else if (@Model.listil.Rows[i]["OperationType"].ToString() == "3")
+                    {
+                        Write("Возврат");
+                    }
+                    else
+                    {
+
+                    }
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+

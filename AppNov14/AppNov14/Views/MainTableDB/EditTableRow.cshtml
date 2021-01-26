@@ -1,0 +1,201 @@
+﻿@model AppNov14.Models.MainTableDB
+
+@{
+    ViewData["Title"] = "Редактор записей таблицы";
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery-ui.js"></script>
+<link href="~/jquery-ui.css" rel="stylesheet" />
+
+
+
+<h1>Редактор записей таблицы</h1>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<hr />
+@if (Convert.ToInt32(Model.OperationType.ToString()) == 1)
+{
+<h3>Редактирование: Добавление сырья на склад</h3>
+}
+else if (Convert.ToInt32(Model.OperationType.ToString()) == 2)
+{
+<h3>Редактирование: Списание сырья со склада</h3>
+}
+else if (Convert.ToInt32(Model.OperationType.ToString()) == 3)
+{
+<h3>Редактирование: Возвращение сырья на склад с производства</h3>
+}
+else
+{
+
+}
+<hr />
+<form asp-action="EditTableRow" autocomplete="on">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Gild" class="control-label">Цех</label>
+            <input asp-for="Gild" class="form-control" />
+            <span asp-validation-for="Gild" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Quantity" class="control-label">Количество</label>
+            <input asp-for="Quantity" class="form-control" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="TypeOfMaterial" class="control-label">Тип материала</label>
+            <select asp-for="TypeOfMaterial" class="form-control" asp-items="@(new SelectList(ViewBag.TypeList, "Value", "Text"))"></select>
+            <span asp-validation-for="TypeOfMaterial" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="NameOfTypeMaterial" class="control-label">Наименование типа материала</label>
+            <select asp-for="NameOfTypeMaterial" class="form-control" asp-items="@(new SelectList(Model.listyNameType, "Value", "Text"))"></select>
+            <span asp-validation-for="NameOfTypeMaterial" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Provider" class="control-label">Поставщик</label>
+            <select asp-for="Provider" class="form-control" asp-items="@(new SelectList(Model.listyProvider, "Value", "Text"))"></select>
+            <span asp-validation-for="Provider" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Manufacturer" class="control-label">Производитель</label>
+            <select asp-for="Manufacturer" class="form-control" asp-items="@(new SelectList(Model.listyManufacturer, "Value", "Text"))"></select>
+            <span asp-validation-for="Manufacturer" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        @if (Convert.ToInt32(Model.OperationType.ToString()) == 2 || Convert.ToInt32(Model.OperationType.ToString()) == 3)
+        {
+            <div class="form-group col-md-6">
+                <label asp-for="Document" class="control-label">Наименование партии</label>
+                <select asp-for="Document" class="form-control" asp-items="@(new SelectList(Model.listyPartiesNames, "Value", "Text"))"></select>
+                <span asp-validation-for="Document" class="text-danger"></span>
+            </div>
+
+        }
+        else
+        {
+            <input type="hidden" asp-for="Document" />
+        }
+        <div class="form-group col-md-6">
+            <label asp-for="NumberOfDocument" class="control-label">Номер партии / Номер документа</label>
+            <select asp-for="NumberOfDocument" class="form-control" asp-items="@(new SelectList(Model.listyParties, "Value", "Text"))"></select>
+            <span asp-validation-for="NumberOfDocument" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Indexation" class="control-label">Паспорт</label>
+            <input asp-for="Indexation" class="form-control" />
+            <span asp-validation-for="Indexation" class="text-danger"></span>
+        </div>
+        @if (Convert.ToInt32(Model.OperationType.ToString()) == 2 || Convert.ToInt32(Model.OperationType.ToString()) == 3)
+        {
+            <div class="form-group col-md-6">
+                <label asp-for="Line" class="control-label">Линия</label>
+                <select asp-for="Line" class="form-control" asp-items="@(new SelectList(Model.listyLine, "Value", "Text"))"></select>
+                <span asp-validation-for="Line" class="text-danger"></span>
+            </div>
+        }
+        else
+        {
+            <input value="1" type="hidden" asp-for="Line" />
+        }
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label asp-for="DocDate" class="control-label">Дата</label>
+            <input asp-for="DocDate" type="date"
+                   min="2010-01-01" max="2050-12-31" class="form-control" />
+            <span asp-validation-for="DocDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Remarks" class="control-label">Примечание</label>
+            <textarea asp-for="Remarks" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Remarks" class="text-danger"></span>
+
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <input type="submit" value="Сохранить" class="btn btn-primary" onclick="return confirm('Вы уверенны, что хотите редактировать запись?')">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-1">
+            <a class="btn btn-outline-secondary" asp-controller="MainTableDB" asp-action="EditDeleteAllData">Назад</a>
+        </div>
+    </div>
+
+</form>
+<script>
+
+    $(function () {
+        $("#TypeOfMaterial").change(function () {
+            if ($(this).val() == "@null") {
+                $("#TypeOfMaterial").prop('disabled', true);
+                $("#TypeOfMaterial").val("@null");
+            }
+            else {
+                $.getJSON("/MainTableDB/GetNameTypes", { type: $("#TypeOfMaterial").val() }, function (d) {
+                    $("#NameOfTypeMaterial").prop('disabled', false);
+                    $("#NameOfTypeMaterial").empty();
+                    $("#NameOfTypeMaterial").append($('<option/>', { value: '@null', text: '--Select--' }));
+                    $.each(d, function (i, v) {
+                        $("#NameOfTypeMaterial").append($('<option/>', { value: v.value, text: v.value }));
+                    });
+
+                })
+            }
+
+        })
+    })
+
+    $(function () {
+        $("#NameOfTypeMaterial").change(function () {
+            if ($(this).val() == "@null") {
+                $("#NameOfTypeMaterial").prop('disabled', true);
+                $("#NameOfTypeMaterial").val("@null");
+            }
+            else {
+                $.getJSON("/MainTableDB/GetProvider", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val() }, function (d) {
+                    $("#Provider").prop('disabled', false);
+                    $("#Provider").empty();
+                    $("#Provider").append($('<option/>', { value: '@null', text: '--Select--' }));
+                    $.each(d, function (i, v) {
+                        $("#Provider").append($('<option/>', { value: v.value, text: v.value }));
+                    });
+
+                })
+            }
+
+        })
+    })
+
+    $(function () {
+        $("#Provider").change(function () {
+            if ($(this).val() == "@null") {
+                $("#Provider").prop('disabled', true);
+                $("#Provider").val("@null");
+            }
+            else {
+                $.getJSON("/MainTableDB/GetManufacturer", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), provider: $("#Provider").val() }, function (d) {
+                    $("#Manufacturer").prop('disabled', false);
+                    $("#Manufacturer").empty();
+                    $("#Manufacturer").append($('<option/>', { value: '@null', text: '--Select--' }));
+                    $.each(d, function (i, v) {
+                        $("#Manufacturer").append($('<option/>', { value: v.value, text: v.value }));
+                    });
+                })
+            }
+
+        })
+    })
+
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
