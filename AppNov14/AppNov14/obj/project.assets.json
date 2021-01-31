@@ -9725,11 +9725,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Gregory\\Documents\\GitHub\\VpApp\\AppNov14\\AppNov14\\AppNov14.csproj",
+      "projectUniqueName": "D:\\ASPProjects\\AppNov14\\AppNov14\\AppNov14.csproj",
       "projectName": "AppNov14",
-      "projectPath": "C:\\Users\\Gregory\\Documents\\GitHub\\VpApp\\AppNov14\\AppNov14\\AppNov14.csproj",
+      "projectPath": "D:\\ASPProjects\\AppNov14\\AppNov14\\AppNov14.csproj",
       "packagesPath": "C:\\Users\\Gregory\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Gregory\\Documents\\GitHub\\VpApp\\AppNov14\\AppNov14\\obj\\",
+      "outputPath": "D:\\ASPProjects\\AppNov14\\AppNov14\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\"

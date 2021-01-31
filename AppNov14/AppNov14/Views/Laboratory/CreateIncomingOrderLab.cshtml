@@ -1,0 +1,144 @@
+﻿@model AppNov14.Models.Laboratory
+
+@{
+    ViewData["Title"] = "Поступление нового сырья на склад";
+}
+
+<h1>Поступление нового сырья на склад</h1>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<hr />
+
+<form asp-action="CreateIncomingOrderLab" autocomplete="on">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Quantity" class="control-label">Количество</label>
+            <input asp-for="Quantity" class="form-control" autocomplete="off" />
+            <span asp-validation-for="Quantity" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Indexation" class="control-label">Паспорт</label>
+            <input asp-for="Indexation" class="form-control" />
+            <span asp-validation-for="Indexation" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="TypeOfMaterial" class="control-label">Тип материала</label>
+            <select asp-for="TypeOfMaterial" class="form-control" asp-items="@(new SelectList(ViewBag.TypeList, "Value", "Text"))"></select>
+            <span asp-validation-for="TypeOfMaterial" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="NameOfTypeMaterial" class="control-label">Наименование типа материала</label>
+            <select asp-for="NameOfTypeMaterial" class="form-control" asp-items="@(new SelectList(String.Empty, "Value", "Text"))"></select>
+            <span asp-validation-for="NameOfTypeMaterial" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Provider" class="control-label">Поставщик</label>
+            <select asp-for="Provider" class="form-control" asp-items="@(new SelectList(String.Empty, "Value", "Text"))"></select>
+            <span asp-validation-for="Provider" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Manufacturer" class="control-label">Производитель</label>
+            <select asp-for="Manufacturer" class="form-control" asp-items="@(new SelectList(String.Empty, "Value", "Text"))"></select>
+            <span asp-validation-for="Manufacturer" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label asp-for="DocDate" class="control-label">Дата</label>
+            <input asp-for="DocDate" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")"
+                   min="2012-01-01" max="2050-12-31" class="form-control" />
+            <span asp-validation-for="DocDate" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Remarks" class="control-label">Примечание</label>
+            <textarea asp-for="Remarks" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Remarks" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group">
+            <input type="submit" value="Сохранить" class="btn btn-primary" onclick="return confirm('Добавить в лабораторию?')">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <a class="btn btn-outline-secondary" asp-controller="WarehouseLab39" asp-action="CreateWarehouseFieldsLab">Добавить новое лабораторное наименование сырья</a>
+        </div>
+    </div>
+
+</form>
+<script>
+
+        $(function () {
+            $("#TypeOfMaterial").change(function () {
+                if ($(this).val() == "@null") {
+                    $("#TypeOfMaterial").prop('disabled', true);
+                    $("#TypeOfMaterial").val("@null");
+                }
+                else {
+                    $.getJSON("/MainTableDB/GetNameTypes", { type: $("#TypeOfMaterial").val() }, function (d) {
+                        $("#NameOfTypeMaterial").prop('disabled', false);
+                        $("#NameOfTypeMaterial").empty();
+                        $("#NameOfTypeMaterial").append($('<option/>', { value: '@null', text: '--Select--' }));
+                        $.each(d, function (i, v) {
+                            $("#NameOfTypeMaterial").append($('<option/>', { value: v.value, text: v.value }));
+                        });
+                        $("#Manufacturer").empty();
+                        $("#Provider").empty();
+                    })
+                }
+
+            })
+        })
+
+        $(function () {
+            $("#NameOfTypeMaterial").change(function () {
+                if ($(this).val() == "@null") {
+                    $("#NameOfTypeMaterial").prop('disabled', true);
+                    $("#NameOfTypeMaterial").val("@null");
+                }
+                else {
+                    $.getJSON("/MainTableDB/GetProvider", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val() }, function (d) {
+                        $("#Provider").prop('disabled', false);
+                        $("#Provider").empty();
+                        $("#Provider").append($('<option/>', { value: '@null', text: '--Select--' }));
+                        $.each(d, function (i, v) {
+                            $("#Provider").append($('<option/>', { value: v.value, text: v.value }));
+                        });
+                        $("#Manufacturer").empty();
+                    })
+                }
+
+            })
+        })
+
+        $(function () {
+            $("#Provider").change(function () {
+                if ($(this).val() == "@null") {
+                    $("#Provider").prop('disabled', true);
+                    $("#Provider").val("@null");
+                }
+                else {
+                    $.getJSON("/MainTableDB/GetManufacturer", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), provider: $("#Provider").val() }, function (d) {
+                        $("#Manufacturer").prop('disabled', false);
+                        $("#Manufacturer").empty();
+                        $("#Manufacturer").append($('<option/>', { value: '@null', text: '--Select--' }));
+                        $.each(d, function (i, v) {
+                            $("#Manufacturer").append($('<option/>', { value: v.value, text: v.value }));
+                        });
+                    })
+                }
+
+            })
+        })
+
+</script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

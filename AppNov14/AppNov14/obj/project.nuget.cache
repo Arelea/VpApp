@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "zh2cswFHWxy4XZWPopeg8R9VHFakVmAsOeUuRzGiv/FyZ0CUdt83oKgc59e7CvI4F/spattOJvX2mp4uKGUnHg==",
+  "dgSpecHash": "+kV5aBWhl7HPtc6WCkF9WIhssdtDA0d/W0pofcb1tzu10dljOQWdrw5Z1QWmG9A6sY+m9lbovnvFFmx+id+eHw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Gregory\\Documents\\GitHub\\VpApp\\AppNov14\\AppNov14\\AppNov14.csproj",
+  "projectFilePath": "D:\\ASPProjects\\AppNov14\\AppNov14\\AppNov14.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Gregory\\.nuget\\packages\\epplus\\4.5.2.1\\epplus.4.5.2.1.nupkg.sha512",
     "C:\\Users\\Gregory\\.nuget\\packages\\jquery\\1.12.4\\jquery.1.12.4.nupkg.sha512",

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -11,17 +10,16 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 
-
 namespace AppNov14.Controllers
 {
     [Authorize]
-    public class Warehouse135Controller : Controller
-    {
+     public class WarehouseLabController : Controller
+     {
         // Начало. Конфигурация для строки подключения
 
         private readonly IConfiguration _configuration;
 
-        public Warehouse135Controller(IConfiguration configuration)
+        public WarehouseLabController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
@@ -61,7 +59,7 @@ namespace AppNov14.Controllers
         {
             try
             {
-                
+
                 List<string> HalfTime = new List<string>();
                 using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
@@ -118,14 +116,14 @@ namespace AppNov14.Controllers
                 }
                 var result = (from N in HalfTime
                               where N.Contains(Prefix)
-                              select new {value = N});
+                              select new { value = N });
 
                 return Json(result);
             }
             catch (SqlException ex)
             {
                 throw ex;
-            }        
+            }
         }
 
         // Конец
@@ -254,9 +252,9 @@ namespace AppNov14.Controllers
         // Начало. Вьюха создание новых полей склада
 
         [HttpGet]
-        public IActionResult CreateWarehouseFields()
+        public IActionResult CreateWarehouseFieldsLab()
         {
-            Warehouse135Model Warehouse135ViewModel = new Warehouse135Model();
+            WarehouseLab Warehouse135ViewModel = new WarehouseLab();
             DataSet dataset = GetTypeOfMaterialWarehouse();
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             foreach (DataRow item in dataset.Tables[0].Rows)
@@ -273,7 +271,7 @@ namespace AppNov14.Controllers
         // Начало. Пост создание новых полей склада
 
         [HttpPost]
-        public async Task<IActionResult> CreateWarehouseFields([Bind("Id,TypeOfMaterial,NameOfTypeMaterial,Provider,Manufacturer")] Warehouse135Model Warehouse135View)
+        public async Task<IActionResult> CreateWarehouseFieldsLab([Bind("Id,TypeOfMaterial,NameOfTypeMaterial,Provider,Manufacturer")] Warehouse135Model Warehouse135View)
         {
             if (ModelState.IsValid)
             {
@@ -286,19 +284,19 @@ namespace AppNov14.Controllers
                         {
                             CommandType = CommandType.StoredProcedure
                         };
-                       
+
                         command.Parameters.AddWithValue("incomin_TypeOfMaterial", Warehouse135View.TypeOfMaterial);
                         command.Parameters.AddWithValue("incomin_NameOfTypeMaterial", Warehouse135View.NameOfTypeMaterial);
                         command.Parameters.AddWithValue("incomin_Provider", Warehouse135View.Provider);
-                        command.Parameters.AddWithValue("incomin_Manufacturer", Warehouse135View.Manufacturer);                      
-                        await command.ExecuteNonQueryAsync();            
+                        command.Parameters.AddWithValue("incomin_Manufacturer", Warehouse135View.Manufacturer);
+                        await command.ExecuteNonQueryAsync();
                     }
                 }
                 catch (SqlException ex)
                 {
                     throw ex;
                 }
-                return RedirectToAction(nameof(CreateWarehouseFields));
+                return RedirectToAction(nameof(CreateWarehouseFieldsLab));
             }
             return View(ModelState.ErrorCount);
         }
@@ -310,11 +308,11 @@ namespace AppNov14.Controllers
 
         [Authorize(Roles = "Moderator, Admin")]
         [HttpGet]
-        public IActionResult CreateWarehouseFieldType()
+        public IActionResult CreateWarehouseFieldTypeLab()
         {
-            Warehouse135Model warehouse135 = new Warehouse135Model();
-            
-            return View(warehouse135);
+            Warehouse135Model Warehouse135ViewModel = new Warehouse135Model();
+
+            return View(Warehouse135ViewModel);
         }
 
         // Конец
@@ -324,7 +322,7 @@ namespace AppNov14.Controllers
 
         [Authorize(Roles = "Moderator, Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateWarehouseFieldType([Bind("Id,TypeOfMaterial,NameOfTypeMaterial,Provider,Manufacturer")] Warehouse135Model warehouse135)
+        public async Task<IActionResult> CreateWarehouseFieldTypeLab([Bind("Id,TypeOfMaterial,NameOfTypeMaterial,Provider,Manufacturer")] Warehouse135Model Warehouse135View)
         {
             if (ModelState.IsValid)
             {
@@ -338,10 +336,10 @@ namespace AppNov14.Controllers
                             CommandType = CommandType.StoredProcedure
                         };
 
-                        command.Parameters.AddWithValue("incomin_TypeOfMaterial", warehouse135.TypeOfMaterial);
-                        command.Parameters.AddWithValue("incomin_NameOfTypeMaterial", warehouse135.NameOfTypeMaterial);
-                        command.Parameters.AddWithValue("incomin_Provider", warehouse135.Provider);
-                        command.Parameters.AddWithValue("incomin_Manufacturer", warehouse135.Manufacturer);
+                        command.Parameters.AddWithValue("incomin_TypeOfMaterial", Warehouse135View.TypeOfMaterial);
+                        command.Parameters.AddWithValue("incomin_NameOfTypeMaterial", Warehouse135View.NameOfTypeMaterial);
+                        command.Parameters.AddWithValue("incomin_Provider", Warehouse135View.Provider);
+                        command.Parameters.AddWithValue("incomin_Manufacturer", Warehouse135View.Manufacturer);
                         await command.ExecuteNonQueryAsync();
                     }
                 }
@@ -349,7 +347,7 @@ namespace AppNov14.Controllers
                 {
                     throw ex;
                 }
-                return RedirectToAction(nameof(CreateWarehouseFields));
+                return RedirectToAction(nameof(CreateWarehouseFieldTypeLab));
             }
             return View(ModelState.ErrorCount);
         }
@@ -360,14 +358,13 @@ namespace AppNov14.Controllers
         // Начало. Вьюха всего склада
 
         [HttpGet]
-        public async Task<IActionResult> WarehouseViewAll()
+        public async Task<IActionResult> WarehouseViewLab(bool loc_SubsType)
         {
             if (ModelState.IsValid)
             {
-                Warehouse135Model warehouse135 = new Warehouse135Model();
+                WarehouseLab warehouse = new WarehouseLab();
 
                 List<string> DiffTypes = new List<string>();
-
                 using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     sqlConnection1.Open();
@@ -375,7 +372,7 @@ namespace AppNov14.Controllers
                     {
                         CommandType = CommandType.StoredProcedure
                     };
-                    cmd.Parameters.AddWithValue("in_SubsType", 1);
+                    cmd.Parameters.AddWithValue("in_SubsType", loc_SubsType == true ? 3 : 2);
 
                     using (SqlDataReader reader = await cmd.ExecuteReaderAsync())
                     {
@@ -386,13 +383,13 @@ namespace AppNov14.Controllers
                     }
                     sqlConnection1.Close();
                 }
-          
+
                 List<DataTable> DiffDataSets = new List<DataTable>();
 
                 using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
-                { 
-                   foreach (var item in DiffTypes)
-                   {
+                {
+                    foreach (var item in DiffTypes)
+                    {
                         DataTable tdbl = new DataTable();
                         sqlConnection.Open();
                         SqlDataAdapter sqlDA = new SqlDataAdapter("WarehouseShowV1", sqlConnection);
@@ -402,19 +399,31 @@ namespace AppNov14.Controllers
                         sqlDA.Fill(tdbl);
                         DiffDataSets.Add(tdbl);
                         sqlConnection.Close();
-                   }
+                    }
                 }
 
-                warehouse135.listil = DiffDataSets;
-                warehouse135.list = DiffTypes.ToArray();
+                warehouse.listil = DiffDataSets;
+                warehouse.list = DiffTypes.ToArray();
 
-                return View(warehouse135);
+                return View(warehouse);
             }
             return View(ModelState.ErrorCount);
         }
-   
+
         // Конец
         //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
+        // Начало. Пост склада
+
+        [HttpPost]
+        public async Task<IActionResult> WarehouseViewLab(WarehouseLab warehouse)
+        {
+            if (ModelState.IsValid)
+            {
+                await WarehouseViewLab(warehouse.WarehouseSubs);
+                return View();
+            }
+            return View(ModelState.ErrorCount);
+        }
     }
 }

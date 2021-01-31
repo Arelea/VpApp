@@ -1,0 +1,49 @@
+﻿@model AppNov14.Models.Laboratory
+
+@{
+    ViewData["Title"] = "Главное меню";
+}
+
+<h1>Лаборатория</h1>
+
+<br />
+<h3>Работа с базой</h3>
+<br />
+<a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="CreateIncomingOrderLab">Поступление нового сырья в лабораторию</a>
+<br />
+<hr />
+<a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="CreateOutcomingOrderLab">Списания сырья из лаборатории</a>
+<br />
+<hr />
+<a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="CreateWarehouseFieldsLab">Добавить новое наименование сырья</a>
+<br />
+<hr />
+@if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
+ {
+    <a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="CreateWarehouseFieldType">Добавить новый тип сырья</a>
+    <br />
+    <hr />
+    <a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="EditDeleteAllData">Редактирование и удаление</a>
+    <br />
+    <hr />
+ }
+
+<h3>Последние записи и склад</h3>
+<br />
+<a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="LastAddingsLab">Последние записи</a>
+<br />
+<hr />
+<a class="btn btn-sm btn-primary" asp-controller="WarehouseLab" asp-action="WarehouseViewLab">Склад лабораторного сырья</a>
+<br />
+<hr />
+<h3>Поиск и Excel выписка</h3>
+<br />
+<a class="btn btn-sm btn-primary" asp-controller="Search" asp-action="Index">Поиск</a>
+<br />
+<hr />
+<a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="ImportExcelFile">Excel выписка</a>
+<br />
+<hr />
+<a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="GetPartiesInfo">Состав партии</a>
+<br />
+<hr />

@@ -1,0 +1,154 @@
+﻿@model System.Data.DataTable
+
+@{
+    ViewData["Title"] = "Последние записи";
+}
+
+<div class="jumbotron">
+    <h1 class="text-center">Последние записи</h1>
+</div>
+
+<table align="center" class="table table-bordered">
+
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                #Id
+            </th>
+            <th>
+                Цех
+            </th>
+            <th>
+                Тип материала
+            </th>
+            <th>
+                Наименование типа материала
+            </th>
+            <th>
+                Количество
+            </th>
+            <th>
+                Остатки
+            </th>
+            <th>
+                Поставщик
+            </th>
+            <th>
+                Производитель
+            </th>
+            <th>
+                ТТН / Наименование партии
+            </th>
+            <th>
+                Номер документа / Номер партии
+            </th>
+            <th>
+                Паспорт
+            </th>
+            <th>
+                Линия
+            </th>
+            <th>
+                Дата документа
+            </th>
+            <th>
+                Имя сотрудника
+            </th>
+            <th>
+                IP Адресс
+            </th>
+            <th>
+                Дата
+            </th>
+            <th>
+                Примечание
+            </th>
+            <th>
+                Тип процедуры
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @for (int i = 0; i < Model.Rows.Count; i++)
+
+        {
+            <tr>
+                <td>
+                    @Model.Rows[i]["Id"]
+                </td>
+                <td>
+                    @Model.Rows[i]["Gild"]
+                </td>
+                <td>
+                    @Model.Rows[i]["TypeOfMaterial"]
+                </td>
+                <td>
+                    @Model.Rows[i]["NameOfTypeMaterial"]
+                </td>
+
+                <td>
+                    @Model.Rows[i]["Quantity"]
+                </td>
+                <td>
+                    @Model.Rows[i]["Leftovers"]
+                </td>
+                <td>
+                    @Model.Rows[i]["Provider"]
+                </td>
+                <td>
+                    @Model.Rows[i]["Manufacturer"]
+                </td>
+                <td>
+                    @Model.Rows[i]["Document"]
+                </td>
+                <td>
+                    @Model.Rows[i]["NumberOfDocument"]
+                </td>
+                <td>
+                    @Model.Rows[i]["Indexation"]
+                </td>
+                <td>
+                    @Model.Rows[i]["Line"]
+                </td>
+                <td>
+                    @Model.Rows[i]["DocDate"]
+                </td>
+                <td>
+                    @Model.Rows[i]["Employee"]
+                </td>
+                <td>
+                    @Model.Rows[i]["IpAdress"]
+                </td>
+                <td>
+                    @Model.Rows[i]["AutoDate"]
+                </td>
+                <td>
+                    @Model.Rows[i]["Remarks"]
+                </td>
+                <td>
+                    @if (@Model.Rows[i]["OperationType"].ToString() == "1")
+                    {
+                        Write("Приход");
+                    }
+                    else if (@Model.Rows[i]["OperationType"].ToString() == "2")
+                    {
+                        Write("Расход");
+                    }
+                    else if (@Model.Rows[i]["OperationType"].ToString() == "3")
+                    {
+                        Write("Возврат");
+                    }
+                    else
+                    {
+
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<br>
+<br>
+<a class="btn btn-outline-secondary" asp-controller="Laboratory" asp-action="Index">Назад</a>
+<br />
