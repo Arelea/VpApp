@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-info border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="MainTableDB" asp-action="Index">VestPlast Database</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">VestPlast Database</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -19,18 +19,12 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item active">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MainTableDB" asp-action="Index">Производство</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Warehouse135" asp-action="WarehouseViewAll">Склад</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Laboratory" asp-action="Index">Лаборатория</a>
                         </li>
-                        <li class="nav-item active">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Search" asp-action="Index">Поиск</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MainTableDB" asp-action="ImportExcelFile">Excel</a>
-                        </li>
-                        <li class="nav-item dropdown active">
+                        @*<li class="nav-item dropdown active">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Добавить запись</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-controller="MainTableDB" asp-action="CreateIncomingOrder">Приход сырья</a>
@@ -39,7 +33,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" asp-controller="MainTableDB" asp-action="CreateReturnOrder">Возврат сырья</a>
                             </div>
-                        </li>
+                        </li>*@
                         <li class="nav-item active">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">О базе</a>
                         </li>

@@ -18,7 +18,7 @@
                     url: '/Warehouse135/GetTypes',
                     type: 'POST',
                     cache: false,
-                    data: { Prefix: request.term },
+                    data: { Prefix: request.term, SubsType: 1},
                     dataType: 'json',
                     success: function (data) {
                         response($.map(data, function (item) {
@@ -41,7 +41,7 @@
                     url: '/Warehouse135/GetNameTypes',
                     type: 'POST',
                     cache: false,
-                    data: { Prefix: request.term },
+                    data: { Prefix: request.term, SubsType: 1},
                     dataType: 'json',
 
                     success: function (data) {
@@ -65,7 +65,7 @@
                     url: '/Warehouse135/GetProvider',
                     type: 'POST',
                     cache: false,
-                    data: { Prefix: request.term },
+                    data: { Prefix: request.term, SubsType: 1},
                     dataType: 'json',
                     success: function (data) {
                         response($.map(data, function (item) {
@@ -88,7 +88,7 @@
                     url: '/Warehouse135/GetManufacturer',
                     type: 'POST',
                     cache: false,
-                    data: { Prefix: request.term },
+                    data: { Prefix: request.term, SubsType: 1},
                     dataType: 'json',
                     success: function (data) {
                         response($.map(data, function (item) {
@@ -143,7 +143,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Сохранить" class="btn btn-primary" onclick="return confirm('Вы уверенны, что хотите добавить сырье на склад?')">
+                <input type="submit" value="Сохранить" class="btn btn-primary" onclick="return confirm('Вы уверенны, что хотите добавить?')">
             </div>
         </form>
     </div>

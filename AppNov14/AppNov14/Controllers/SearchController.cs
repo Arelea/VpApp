@@ -40,7 +40,8 @@ namespace AppNov14.Controllers
                 using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     connection.Open();
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter("TypeMaterialV1ProcedureForJQuery", connection);
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter("JQ_MultiController_GetDistinct_TypeOfMaterial", connection);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", 1);
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }
@@ -61,8 +62,9 @@ namespace AppNov14.Controllers
                 using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     connection.Open();
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter("NameTypeMaterialV1ProcedureForJQuery", connection);
-                    dataAdapter.SelectCommand.Parameters.AddWithValue("incomin_TypeOfMaterial", type);
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter("JQ_MultiController_GetDistinct_NameOfTypeMaterial_DependentByTypeOfMaterial", connection);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_TypeOfMaterial", type);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", 1);
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }
@@ -82,7 +84,8 @@ namespace AppNov14.Controllers
                 using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     connection.Open();
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter("NameTypeMaterialV1ProcedureForJQuerySearch", connection);
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter("JQ_MultiController_GetDistinct_NameOfTypeMaterial", connection);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", 1);                    
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }
@@ -95,51 +98,7 @@ namespace AppNov14.Controllers
         }
         // Конец
         //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-        // Начало. Получение уникаольных значений имени типа материала для JQuery Cascade Dropdown list
-
-        //[NonAction]
-        //public DataSet GetProviderSearch(string type, string typename)
-        //{
-        //    try
-        //    {
-        //        DataSet dataset = new DataSet();
-        //        using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
-        //        {
-        //            connection.Open();
-        //            SqlDataAdapter dataAdapter = new SqlDataAdapter("ProviderV1ProcedureForJQuery", connection);
-        //            dataAdapter.SelectCommand.Parameters.AddWithValue("incomin_TypeOfMaterial", type);
-        //            dataAdapter.SelectCommand.Parameters.AddWithValue("incomin_NameOfTypeMaterial", typename);
-        //            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-        //            dataAdapter.Fill(dataset);
-        //        }
-        //        return dataset;
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-        //public DataSet GetProviderSearch(string manufacturer)
-        //{
-        //    try
-        //    {
-        //        DataSet dataset = new DataSet();
-        //        using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
-        //        {
-        //            connection.Open();
-        //            SqlDataAdapter dataAdapter = new SqlDataAdapter("ProviderV1ProcedureForJQuerySearchForManufacturer", connection);
-        //            dataAdapter.SelectCommand.Parameters.AddWithValue("incomin_Manufacturer", manufacturer);
-        //            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-        //            dataAdapter.Fill(dataset);
-        //        }
-        //        return dataset;
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
+      
 
         [NonAction]
         public DataSet GetProviderSearch()
@@ -150,7 +109,8 @@ namespace AppNov14.Controllers
                 using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     connection.Open();
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter("ProviderV1ProcedureForJQuerySearch", connection);
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter("JQ_MultiController_GetDistinct_Provider", connection);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", 1);
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }
@@ -165,32 +125,6 @@ namespace AppNov14.Controllers
         // Конец
         //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-        // Начало. Получение уникаольных значений производителя (Manufacturer) для JQuery Cascade Dropdown list
-
-        //[NonAction]
-        //public DataSet GetManufacturerSearch(string type, string typename, string provider)
-        //{
-        //    try
-        //    {
-        //        DataSet dataset = new DataSet();
-        //        using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
-        //        {
-        //            connection.Open();
-        //            SqlDataAdapter dataAdapter = new SqlDataAdapter("ManufacturerV1ProcedureForJQuery", connection);
-        //            dataAdapter.SelectCommand.Parameters.AddWithValue("incomin_TypeOfMaterial", type);
-        //            dataAdapter.SelectCommand.Parameters.AddWithValue("incomin_NameOfTypeMaterial", typename);
-        //            dataAdapter.SelectCommand.Parameters.AddWithValue("incomin_Provider", provider);
-        //            dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
-        //            dataAdapter.Fill(dataset);
-        //        }
-        //        return dataset;
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
-
         [NonAction]
         public DataSet GetManufacturerSearch()
         {
@@ -200,7 +134,8 @@ namespace AppNov14.Controllers
                 using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     connection.Open();
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter("ManufacturerV1ProcedureForJQuerySearch", connection);
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter("JQ_MultiController_GetDistinct_Manufacturer", connection);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", 1);
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }

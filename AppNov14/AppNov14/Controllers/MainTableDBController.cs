@@ -42,7 +42,8 @@ namespace AppNov14.Controllers
                 using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     connection.Open();
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter("TypeMaterialV1ProcedureForJQuery", connection);
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter("JQ_MultiController_GetDistinct_TypeOfMaterial", connection);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", 1);
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }
@@ -68,8 +69,9 @@ namespace AppNov14.Controllers
                 using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     connection.Open();
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter("NameTypeMaterialV1ProcedureForJQuery", connection);
-                    dataAdapter.SelectCommand.Parameters.AddWithValue("incomin_TypeOfMaterial", type);
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter("JQ_MultiController_GetDistinct_NameOfTypeMaterial_DependentByTypeOfMaterial", connection);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_TypeOfMaterial", type);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", 1);
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }

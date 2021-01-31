@@ -37,7 +37,8 @@ namespace AppNov14.Controllers
                 using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     connection.Open();
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter("TypeMaterialV1ProcedureForJQuery", connection);
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter("JQ_MultiController_GetDistinct_TypeOfMaterial", connection);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", 3);
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }

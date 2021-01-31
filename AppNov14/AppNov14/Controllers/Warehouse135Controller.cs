@@ -40,7 +40,8 @@ namespace AppNov14.Controllers
                 using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     connection.Open();
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter("TypeMaterialV1ProcedureForJQuery", connection);
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter("JQ_MultiController_GetDistinct_TypeOfMaterial", connection);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", 1);
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }
@@ -57,7 +58,7 @@ namespace AppNov14.Controllers
 
         // Начало. Получение уникальных значений имени типа материала для JQuery Autocomplete для CreateWarehouseFieldType
 
-        public JsonResult GetNameTypesSecond(string type, string Prefix)
+        public JsonResult GetNameTypesSecond(string type, string Prefix, int SubsType)
         {
             try
             {
@@ -66,11 +67,12 @@ namespace AppNov14.Controllers
                 using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     sqlConnection1.Open();
-                    SqlCommand command = new SqlCommand("NameTypeMaterialV1ProcedureForJQuery", sqlConnection1)
+                    SqlCommand command = new SqlCommand("JQ_MultiController_GetDistinct_NameOfTypeMaterial_DependentByTypeOfMaterial", sqlConnection1)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
-                    command.Parameters.AddWithValue("incomin_TypeOfMaterial", type);
+                    command.Parameters.AddWithValue("in_TypeOfMaterial", type);
+                    command.Parameters.AddWithValue("in_SubsType", SubsType);
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -98,7 +100,7 @@ namespace AppNov14.Controllers
         // Начало. Получение уникальных значений типа материала для JQuery Autocomplete для CreateWarehouseFields
 
         [HttpPost]
-        public JsonResult GetTypes(string Prefix)
+        public JsonResult GetTypes(string Prefix, int SubsType)
         {
             try
             {
@@ -106,7 +108,11 @@ namespace AppNov14.Controllers
                 using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     sqlConnection1.Open();
-                    SqlCommand cmd = new SqlCommand("TypeMaterialV1ProcedureForJQuery", sqlConnection1);
+                    SqlCommand cmd = new SqlCommand("JQ_MultiController_GetDistinct_TypeOfMaterial", sqlConnection1)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmd.Parameters.AddWithValue("in_SubsType", SubsType);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -134,7 +140,7 @@ namespace AppNov14.Controllers
         // Начало. Получение уникальных значений имени типа материала для JQuery Autocomplete для CreateWarehouseFields
 
         [HttpPost]
-        public JsonResult GetNameTypes(string Prefix)
+        public JsonResult GetNameTypes(string Prefix, int SubsType)
         {
             try
             {
@@ -142,7 +148,11 @@ namespace AppNov14.Controllers
                 using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     sqlConnection1.Open();
-                    SqlCommand cmd = new SqlCommand("NameTypeMaterialV1ProcedureForJQueryAutocomplete", sqlConnection1);
+                    SqlCommand cmd = new SqlCommand("JQ_MultiController_GetDistinct_NameOfTypeMaterial", sqlConnection1)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmd.Parameters.AddWithValue("in_SubsType", SubsType);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -170,7 +180,7 @@ namespace AppNov14.Controllers
         // Начало. Получение уникальных значений постовщика (Provider) для JQuery Autocomplete для CreateWarehouseFields
 
         [HttpPost]
-        public JsonResult GetProvider(string Prefix)
+        public JsonResult GetProvider(string Prefix, int SubsType)
         {
             try
             {
@@ -178,7 +188,11 @@ namespace AppNov14.Controllers
                 using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     sqlConnection1.Open();
-                    SqlCommand cmd = new SqlCommand("ProviderV1ProcedureForJQueryAutocomplete", sqlConnection1);
+                    SqlCommand cmd = new SqlCommand("JQ_MultiController_GetDistinct_Provider", sqlConnection1)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmd.Parameters.AddWithValue("in_SubsType", SubsType);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -206,7 +220,7 @@ namespace AppNov14.Controllers
         // Начало. Получение уникальных значений производителя (Manufacturer) для JQuery Autocomplete для CreateWarehouseFields
 
         [HttpPost]
-        public JsonResult GetManufacturer(string Prefix)
+        public JsonResult GetManufacturer(string Prefix, int SubsType)
         {
             try
             {
@@ -214,7 +228,11 @@ namespace AppNov14.Controllers
                 using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     sqlConnection1.Open();
-                    SqlCommand cmd = new SqlCommand("ManufacturerV1ProcedureForJQueryAutocomplete", sqlConnection1);
+                    SqlCommand cmd = new SqlCommand("JQ_MultiController_GetDistinct_Manufacturer", sqlConnection1)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
+                    cmd.Parameters.AddWithValue("in_SubsType", SubsType);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -256,7 +274,7 @@ namespace AppNov14.Controllers
         [HttpGet]
         public IActionResult CreateWarehouseFields()
         {
-            Warehouse135Model Warehouse135ViewModel = new Warehouse135Model();
+            Warehouse135Model warehouse135 = new Warehouse135Model();
             DataSet dataset = GetTypeOfMaterialWarehouse();
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             foreach (DataRow item in dataset.Tables[0].Rows)
@@ -264,7 +282,7 @@ namespace AppNov14.Controllers
                 selectListItems.Add(new SelectListItem { Value = item["TypeOfMaterial"].ToString(), Text = item["TypeOfMaterial"].ToString() });
             }
             ViewBag.TypeList = selectListItems;
-            return View(Warehouse135ViewModel);
+            return View(warehouse135);
         }
 
         // Конец
@@ -273,7 +291,7 @@ namespace AppNov14.Controllers
         // Начало. Пост создание новых полей склада
 
         [HttpPost]
-        public async Task<IActionResult> CreateWarehouseFields([Bind("Id,TypeOfMaterial,NameOfTypeMaterial,Provider,Manufacturer")] Warehouse135Model Warehouse135View)
+        public async Task<IActionResult> CreateWarehouseFields([Bind("Id,TypeOfMaterial,NameOfTypeMaterial,Provider,Manufacturer")] Warehouse135Model warehouse135)
         {
             if (ModelState.IsValid)
             {
@@ -282,15 +300,16 @@ namespace AppNov14.Controllers
                     using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                     {
                         sqlConnection.Open();
-                        SqlCommand command = new SqlCommand("WarehouseParametersV1", sqlConnection)
+                        SqlCommand command = new SqlCommand("BasApp_Warehouse_Add", sqlConnection)
                         {
                             CommandType = CommandType.StoredProcedure
                         };
                        
-                        command.Parameters.AddWithValue("incomin_TypeOfMaterial", Warehouse135View.TypeOfMaterial);
-                        command.Parameters.AddWithValue("incomin_NameOfTypeMaterial", Warehouse135View.NameOfTypeMaterial);
-                        command.Parameters.AddWithValue("incomin_Provider", Warehouse135View.Provider);
-                        command.Parameters.AddWithValue("incomin_Manufacturer", Warehouse135View.Manufacturer);                      
+                        command.Parameters.AddWithValue("in_TypeOfMaterial", warehouse135.TypeOfMaterial);
+                        command.Parameters.AddWithValue("in_NameOfTypeMaterial", warehouse135.NameOfTypeMaterial);
+                        command.Parameters.AddWithValue("in_Provider", warehouse135.Provider);
+                        command.Parameters.AddWithValue("in_Manufacturer", warehouse135.Manufacturer);
+                        command.Parameters.AddWithValue("in_SubsType", 1);
                         await command.ExecuteNonQueryAsync();            
                     }
                 }
@@ -333,15 +352,16 @@ namespace AppNov14.Controllers
                     using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                     {
                         sqlConnection.Open();
-                        SqlCommand command = new SqlCommand("WarehouseParametersV1", sqlConnection)
+                        SqlCommand command = new SqlCommand("BasApp_Warehouse_Add", sqlConnection)
                         {
                             CommandType = CommandType.StoredProcedure
                         };
 
-                        command.Parameters.AddWithValue("incomin_TypeOfMaterial", warehouse135.TypeOfMaterial);
-                        command.Parameters.AddWithValue("incomin_NameOfTypeMaterial", warehouse135.NameOfTypeMaterial);
-                        command.Parameters.AddWithValue("incomin_Provider", warehouse135.Provider);
-                        command.Parameters.AddWithValue("incomin_Manufacturer", warehouse135.Manufacturer);
+                        command.Parameters.AddWithValue("in_TypeOfMaterial", warehouse135.TypeOfMaterial);
+                        command.Parameters.AddWithValue("in_NameOfTypeMaterial", warehouse135.NameOfTypeMaterial);
+                        command.Parameters.AddWithValue("in_Provider", warehouse135.Provider);
+                        command.Parameters.AddWithValue("in_Manufacturer", warehouse135.Manufacturer);
+                        command.Parameters.AddWithValue("in_SubsType", 1);
                         await command.ExecuteNonQueryAsync();
                     }
                 }
@@ -349,7 +369,7 @@ namespace AppNov14.Controllers
                 {
                     throw ex;
                 }
-                return RedirectToAction(nameof(CreateWarehouseFields));
+                return RedirectToAction(nameof(CreateWarehouseFieldType));
             }
             return View(ModelState.ErrorCount);
         }
@@ -371,7 +391,7 @@ namespace AppNov14.Controllers
                 using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     sqlConnection1.Open();
-                    SqlCommand cmd = new SqlCommand("WarehouseDistinctV1", sqlConnection1)
+                    SqlCommand cmd = new SqlCommand("BasApp_Warehouse_GetDistinct", sqlConnection1)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
@@ -395,8 +415,8 @@ namespace AppNov14.Controllers
                    {
                         DataTable tdbl = new DataTable();
                         sqlConnection.Open();
-                        SqlDataAdapter sqlDA = new SqlDataAdapter("WarehouseShowV1", sqlConnection);
-                        sqlDA.SelectCommand.Parameters.AddWithValue("in_MatType", item);
+                        SqlDataAdapter sqlDA = new SqlDataAdapter("BasApp_Warehouse_ViewAllData", sqlConnection);
+                        sqlDA.SelectCommand.Parameters.AddWithValue("in_TypeOfMaterial", item);
                         sqlDA.SelectCommand.Parameters.AddWithValue("in_SubsType", 1);
                         sqlDA.SelectCommand.CommandType = CommandType.StoredProcedure;
                         sqlDA.Fill(tdbl);

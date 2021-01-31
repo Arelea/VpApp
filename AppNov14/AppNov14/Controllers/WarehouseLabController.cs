@@ -38,7 +38,8 @@ namespace AppNov14.Controllers
                 using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     connection.Open();
-                    SqlDataAdapter dataAdapter = new SqlDataAdapter("TypeMaterialV1ProcedureForJQuery", connection);
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter("JQ_MultiController_GetDistinct_TypeOfMaterial", connection);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", 3);
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }
@@ -51,210 +52,14 @@ namespace AppNov14.Controllers
         }
 
         // Конец
-        //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _      
 
-        // Начало. Получение уникальных значений имени типа материала для JQuery Autocomplete для CreateWarehouseFieldType
-
-        public JsonResult GetNameTypesSecond(string type, string Prefix)
-        {
-            try
-            {
-
-                List<string> HalfTime = new List<string>();
-                using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
-                {
-                    sqlConnection1.Open();
-                    SqlCommand command = new SqlCommand("NameTypeMaterialV1ProcedureForJQuery", sqlConnection1)
-                    {
-                        CommandType = CommandType.StoredProcedure
-                    };
-                    command.Parameters.AddWithValue("incomin_TypeOfMaterial", type);
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            HalfTime.Add(Convert.ToString(reader.GetString(0)));
-                        }
-                    }
-                }
-                var result = (from N in HalfTime
-                              where N.Contains(Prefix)
-                              select new { value = N });
-
-
-                return Json(result);
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-        }
-
-        // Конец
-        //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-        // Начало. Получение уникальных значений типа материала для JQuery Autocomplete для CreateWarehouseFields
-
-        [HttpPost]
-        public JsonResult GetTypes(string Prefix)
-        {
-            try
-            {
-                List<string> HalfTime = new List<string>();
-                using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
-                {
-                    sqlConnection1.Open();
-                    SqlCommand cmd = new SqlCommand("TypeMaterialV1ProcedureForJQuery", sqlConnection1);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            HalfTime.Add(Convert.ToString(reader.GetString(0)));
-                        }
-                    }
-                }
-                var result = (from N in HalfTime
-                              where N.Contains(Prefix)
-                              select new { value = N });
-
-                return Json(result);
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-        }
-
-        // Конец
-        //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-        // Начало. Получение уникальных значений имени типа материала для JQuery Autocomplete для CreateWarehouseFields
-
-        [HttpPost]
-        public JsonResult GetNameTypes(string Prefix)
-        {
-            try
-            {
-                List<string> HalfTime = new List<string>();
-                using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
-                {
-                    sqlConnection1.Open();
-                    SqlCommand cmd = new SqlCommand("NameTypeMaterialV1ProcedureForJQueryAutocomplete", sqlConnection1);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            HalfTime.Add(Convert.ToString(reader.GetString(0)));
-                        }
-                    }
-                }
-                var result = (from N in HalfTime
-                              where N.Contains(Prefix)
-                              select new { value = N });
-
-                return Json(result);
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-        }
-
-        // Конец
-        //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-        // Начало. Получение уникальных значений постовщика (Provider) для JQuery Autocomplete для CreateWarehouseFields
-
-        [HttpPost]
-        public JsonResult GetProvider(string Prefix)
-        {
-            try
-            {
-                List<string> HalfTime = new List<string>();
-                using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
-                {
-                    sqlConnection1.Open();
-                    SqlCommand cmd = new SqlCommand("ProviderV1ProcedureForJQueryAutocomplete", sqlConnection1);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            HalfTime.Add(Convert.ToString(reader.GetString(0)));
-                        }
-                    }
-                }
-                var result = (from N in HalfTime
-                              where N.Contains(Prefix)
-                              select new { value = N });
-
-                return Json(result);
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-        }
-
-        // Конец
-        //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-        // Начало. Получение уникальных значений производителя (Manufacturer) для JQuery Autocomplete для CreateWarehouseFields
-
-        [HttpPost]
-        public JsonResult GetManufacturer(string Prefix)
-        {
-            try
-            {
-                List<string> HalfTime = new List<string>();
-                using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
-                {
-                    sqlConnection1.Open();
-                    SqlCommand cmd = new SqlCommand("ManufacturerV1ProcedureForJQueryAutocomplete", sqlConnection1);
-
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            HalfTime.Add(Convert.ToString(reader.GetString(0)));
-                        }
-                    }
-                }
-                var result = (from N in HalfTime
-                              where N.Contains(Prefix)
-                              select new { value = N });
-
-
-                return Json(result);
-            }
-            catch (SqlException ex)
-            {
-                throw ex;
-            }
-        }
-
-        // Конец
-        //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-        // Начало. Индекс
-
-        [HttpGet]
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-        // Конец
-        //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
-
-        // Начало. Вьюха создание новых полей склада
+        // Начало. Вьюха создание новых полей лабораторного склада
 
         [HttpGet]
         public IActionResult CreateWarehouseFieldsLab()
         {
-            WarehouseLab Warehouse135ViewModel = new WarehouseLab();
+            WarehouseLab warehouse = new WarehouseLab();
             DataSet dataset = GetTypeOfMaterialWarehouse();
             List<SelectListItem> selectListItems = new List<SelectListItem>();
             foreach (DataRow item in dataset.Tables[0].Rows)
@@ -262,16 +67,16 @@ namespace AppNov14.Controllers
                 selectListItems.Add(new SelectListItem { Value = item["TypeOfMaterial"].ToString(), Text = item["TypeOfMaterial"].ToString() });
             }
             ViewBag.TypeList = selectListItems;
-            return View(Warehouse135ViewModel);
+            return View(warehouse);
         }
 
         // Конец
         //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-        // Начало. Пост создание новых полей склада
+        // Начало. Пост создание новых полей лабораторного склада
 
         [HttpPost]
-        public async Task<IActionResult> CreateWarehouseFieldsLab([Bind("Id,TypeOfMaterial,NameOfTypeMaterial,Provider,Manufacturer")] Warehouse135Model Warehouse135View)
+        public async Task<IActionResult> CreateWarehouseFieldsLab([Bind("Id,TypeOfMaterial,NameOfTypeMaterial,Provider,Manufacturer")] WarehouseLab warehouse)
         {
             if (ModelState.IsValid)
             {
@@ -280,15 +85,16 @@ namespace AppNov14.Controllers
                     using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                     {
                         sqlConnection.Open();
-                        SqlCommand command = new SqlCommand("WarehouseParametersV1", sqlConnection)
+                        SqlCommand command = new SqlCommand("BasApp_Warehouse_Add", sqlConnection)
                         {
                             CommandType = CommandType.StoredProcedure
                         };
 
-                        command.Parameters.AddWithValue("incomin_TypeOfMaterial", Warehouse135View.TypeOfMaterial);
-                        command.Parameters.AddWithValue("incomin_NameOfTypeMaterial", Warehouse135View.NameOfTypeMaterial);
-                        command.Parameters.AddWithValue("incomin_Provider", Warehouse135View.Provider);
-                        command.Parameters.AddWithValue("incomin_Manufacturer", Warehouse135View.Manufacturer);
+                        command.Parameters.AddWithValue("in_TypeOfMaterial", warehouse.TypeOfMaterial);
+                        command.Parameters.AddWithValue("in_NameOfTypeMaterial", warehouse.NameOfTypeMaterial);
+                        command.Parameters.AddWithValue("in_Provider", warehouse.Provider);
+                        command.Parameters.AddWithValue("in_Manufacturer", warehouse.Manufacturer);
+                        command.Parameters.AddWithValue("in_SubsType", 2);
                         await command.ExecuteNonQueryAsync();
                     }
                 }
@@ -304,25 +110,25 @@ namespace AppNov14.Controllers
         // Конец
         //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-        // Начало. Вьюха создания нового типа и полей склада
+        // Начало. Вьюха создания нового типа и полей лабораторного склада
 
         [Authorize(Roles = "Moderator, Admin")]
         [HttpGet]
         public IActionResult CreateWarehouseFieldTypeLab()
         {
-            Warehouse135Model Warehouse135ViewModel = new Warehouse135Model();
+            WarehouseLab warehouse = new WarehouseLab();
 
-            return View(Warehouse135ViewModel);
+            return View(warehouse);
         }
 
         // Конец
         //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-        // Начало. Пост создания нового типа и полей склада
+        // Начало. Пост создания нового типа и полей лабораторного склада
 
         [Authorize(Roles = "Moderator, Admin")]
         [HttpPost]
-        public async Task<IActionResult> CreateWarehouseFieldTypeLab([Bind("Id,TypeOfMaterial,NameOfTypeMaterial,Provider,Manufacturer")] Warehouse135Model Warehouse135View)
+        public async Task<IActionResult> CreateWarehouseFieldTypeLab([Bind("Id,TypeOfMaterial,NameOfTypeMaterial,Provider,Manufacturer")] WarehouseLab warehouse)
         {
             if (ModelState.IsValid)
             {
@@ -331,15 +137,16 @@ namespace AppNov14.Controllers
                     using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                     {
                         sqlConnection.Open();
-                        SqlCommand command = new SqlCommand("WarehouseParametersV1", sqlConnection)
+                        SqlCommand command = new SqlCommand("BasApp_Warehouse_Add", sqlConnection)
                         {
                             CommandType = CommandType.StoredProcedure
                         };
 
-                        command.Parameters.AddWithValue("incomin_TypeOfMaterial", Warehouse135View.TypeOfMaterial);
-                        command.Parameters.AddWithValue("incomin_NameOfTypeMaterial", Warehouse135View.NameOfTypeMaterial);
-                        command.Parameters.AddWithValue("incomin_Provider", Warehouse135View.Provider);
-                        command.Parameters.AddWithValue("incomin_Manufacturer", Warehouse135View.Manufacturer);
+                        command.Parameters.AddWithValue("in_TypeOfMaterial", warehouse.TypeOfMaterial);
+                        command.Parameters.AddWithValue("in_NameOfTypeMaterial", warehouse.NameOfTypeMaterial);
+                        command.Parameters.AddWithValue("in_Provider", warehouse.Provider);
+                        command.Parameters.AddWithValue("in_Manufacturer", warehouse.Manufacturer);
+                        command.Parameters.AddWithValue("in_SubsType", 2);
                         await command.ExecuteNonQueryAsync();
                     }
                 }
@@ -355,7 +162,7 @@ namespace AppNov14.Controllers
         // Конец
         //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-        // Начало. Вьюха всего склада
+        // Начало. Вьюха всего склада + лаборатороного
 
         [HttpGet]
         public async Task<IActionResult> WarehouseViewLab(bool loc_SubsType)
@@ -368,7 +175,7 @@ namespace AppNov14.Controllers
                 using (SqlConnection sqlConnection1 = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     sqlConnection1.Open();
-                    SqlCommand cmd = new SqlCommand("WarehouseDistinctV1", sqlConnection1)
+                    SqlCommand cmd = new SqlCommand("BasApp_Warehouse_GetDistinct", sqlConnection1)
                     {
                         CommandType = CommandType.StoredProcedure
                     };
@@ -392,9 +199,9 @@ namespace AppNov14.Controllers
                     {
                         DataTable tdbl = new DataTable();
                         sqlConnection.Open();
-                        SqlDataAdapter sqlDA = new SqlDataAdapter("WarehouseShowV1", sqlConnection);
-                        sqlDA.SelectCommand.Parameters.AddWithValue("in_MatType", item);
-                        sqlDA.SelectCommand.Parameters.AddWithValue("in_SubsType", 1);
+                        SqlDataAdapter sqlDA = new SqlDataAdapter("BasApp_Warehouse_ViewAllData", sqlConnection);
+                        sqlDA.SelectCommand.Parameters.AddWithValue("in_TypeOfMaterial", item);
+                        sqlDA.SelectCommand.Parameters.AddWithValue("in_SubsType", loc_SubsType == true ? 3 : 2);
                         sqlDA.SelectCommand.CommandType = CommandType.StoredProcedure;
                         sqlDA.Fill(tdbl);
                         DiffDataSets.Add(tdbl);
@@ -413,7 +220,7 @@ namespace AppNov14.Controllers
         // Конец
         //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-        // Начало. Пост склада
+        // Начало. Пост лабораторного склада
 
         [HttpPost]
         public async Task<IActionResult> WarehouseViewLab(WarehouseLab warehouse)

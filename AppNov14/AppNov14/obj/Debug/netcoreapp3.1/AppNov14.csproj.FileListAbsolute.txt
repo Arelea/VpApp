@@ -215,3 +215,5 @@ D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\Laboratory\
 D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\Laboratory\CreateOutcomingOrderLab.cshtml.g.cs
 D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\Laboratory\LastAddingsLab.cshtml.g.cs
 D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\WarehouseLab\WarehouseViewLab.cshtml.g.cs
+D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\WarehouseLab\CreateWarehouseFieldsLab.cshtml.g.cs
+D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\WarehouseLab\CreateWarehouseFieldTypeLab.cshtml.g.cs

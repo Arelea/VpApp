@@ -8,7 +8,7 @@
 <link href="~/jquery-ui.css" rel="stylesheet" />
 <h1>Добавление полей склада</h1>
 <script type="text/javascript">
-   
+
     $(function () {
         $("#NameOfTypeMaterial").autocomplete({
             source: function (request, response) {
@@ -16,7 +16,7 @@
                     url: '/Warehouse135/GetNameTypesSecond',
                     type: 'POST',
                     cache: false,
-                    data: { type: $("#TypeOfMaterial").val(), Prefix: request.term, SubsType: 1},
+                    data: { type: $("#TypeOfMaterial").val(), Prefix: request.term, SubsType: 3},
                     dataType: 'json',
 
                     success: function (data) {
@@ -40,7 +40,7 @@
                     url: '/Warehouse135/GetProvider',
                     type: 'POST',
                     cache: false,
-                    data: { Prefix: request.term, SubsType: 1},
+                    data: { Prefix: request.term, SubsType: 3},
                     dataType: 'json',
                     success: function (data) {
                         response($.map(data, function (item) {
@@ -63,7 +63,7 @@
                     url: '/Warehouse135/GetManufacturer',
                     type: 'POST',
                     cache: false,
-                    data: { Prefix: request.term, SubsType: 1},
+                    data: { Prefix: request.term, SubsType: 3},
                     dataType: 'json',
                     success: function (data) {
                         response($.map(data, function (item) {
@@ -84,11 +84,8 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateWarehouseFields" autocomplete="on">
+        <form asp-action="CreateWarehouseFieldsLab" autocomplete="on">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input type="hidden" asp-for="Id" />
-            </div>
             <div class="form-group">
                 <label asp-for="TypeOfMaterial" class="control-label">Тип материала</label>
                 <select asp-for="TypeOfMaterial" class="form-control" asp-items="@(new SelectList(ViewBag.TypeList, "Value", "Text"))"></select>
@@ -126,3 +123,4 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
