@@ -80,7 +80,7 @@ Data Base: MS SQL
 
 Operation Systems: Windows
 
-Languages/Technologies: C#, ASP.NET CORE, ADO/NET, EFC, HTML, CSS, BLAZOR, Microsoft Identity
+Languages/Technologies: C#, ASP.NET CORE, ADO.NET, EFC, HTML, CSS, BLAZOR, Microsoft Identity
 
 Patterns: MVC
 
