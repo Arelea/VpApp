@@ -54,7 +54,8 @@ I am seeking a position of trainee/junior .NET Developer. Want to work in compan
 
 Education:
 
-Moscow Aviation Institute, department of Aerospace, Moscow
+Moscow Aviation Institute, department of Aerospace, Moscow.
+
 Life support systems, thermostatting and protection of rocket-space complexes.
 2016 – present
 
