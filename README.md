@@ -52,6 +52,6 @@ Very responsible person and fully dedicated to thing I do.
 
 About myself:
 
-I am fond of programming, astronautics (I read and watch everything new from this industry), play computer games, ride a snowboard, I love traveling and everything new in general. Have excellent knowledge of Russian language.
+I am fond of programming, astronautics (I read and watch everything new from this industry), play computer games, ride a snowboard, I like travelling and everything new in general. Have excellent knowledge of Russian language.
 
 
