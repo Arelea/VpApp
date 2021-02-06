@@ -1,6 +1,8 @@
 
 Name: Grigory Svistunov
+
 Email: nuclearifa@gmail.com
+
 GitHub:  https://github.com/Arelea
 
 Resume Objective:
