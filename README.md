@@ -7,7 +7,7 @@ GitHub:  https://github.com/Arelea
 
 Resume Objective:
 
-I am seeking a position of trainee/junior .NET Developer. Want to work in company and be a part of real project. Completely ready to learn new technologies and improve my skills. Will spend my personal time studying the required technologies.
+I am seeking a position of junior/intership .NET Developer. Want to work in company and be a part of real project. Completely ready to learn new technologies and improve my skills. Will spend my personal time studying the required technologies.
 
 Education:
 
