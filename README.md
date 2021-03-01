@@ -1,38 +1,59 @@
-Свистунов Григорий
-22 года (23 января 1999) 
-GitHub: https://github.com/Arelea?tab=repositories
 
-Образование:
+Name: Grigory Svistunov
 
-2016 г. – н.в. – Московский Авиационный Институт (Аэрокосмический Институт № 6), Системы обеспечения жизнедеятельности, термостатирования и защиты РКК.
-В данный момент являюсь студентом 5 курса МАИ и продолжаю обучение.
+Email: nuclearifa@gmail.com
 
-Профессиональные навыки:
+GitHub:  https://github.com/Arelea
 
-Последние 6 месяцев изучаю и использую язык программирования С#. Имею опыт разработки веб - приложения на ASP.NET Core с применением паттерна MVC и базы данных MS SQL Server 2019 Express для компании VestPlast https://vestplast.com/ . 
-В данный момент продолжаю работу над вторым проектом для компании VestPlast. Продолжаю изучать C#, читаю книгу Герберта Шилдта и прохожу курсы по ASP.NET Core от ITDVN.
+Resume Objective:
 
-Базы данных: MS SQL
+I am seeking a position of junior/intership .NET Developer. Want to work in company and be a part of real project. Completely ready to learn new technologies and improve my skills. Will spend my personal time studying the required technologies.
 
-Операционные системы: Windows
+Education:
 
-Языки/технологии: С#, ASP.NET CORE, ADO.NET, EFC, HTML, CSS, BLAZOR, WinForms, Microsoft Identity
+Moscow Aviation Institute, department of Aerospace, Moscow.
 
-Принципы/подходы: MVC
+Life support systems, thermostatting and protection of rocket-space complexes.
 
-Знаю английский язык на уровне B2 (Upper Intermediate), могу свободно общаться, писать, читать и воспринимать информацию из англоязычных источников.
+2016 – present.
 
-Хочу выйти на рынок и принять участие в работе над реальным проектом, готов изучать новые технологии в свое личное время и развиваться как разработчик. 
+Currently I am 5th year student in Moscow Aviation Institute.
 
-Опыт официальной работы:
-1)	Май 2019 г. – Сентябрь 2019 г. – Outback Steakhouse. Ocean City, Md. USA
-Работал в американском ресторане линейным поваром. Удостоен звания Лучший работник месяца.
-2)	Июнь 2019 г. – Сентябрь 2019 г. – Grand Prix Amusements. Ocean City, Md. USA
-Работал на картинге.
+Experience:
 
-Личные качества:
-Целеустремленный, стрессоустойчивый, оптимистично настроенный, умею работать как один, так и в коллективе, люблю заниматься своим делом, стремлюсь учится новым вещам, ответственный.
+1)	May 2019. – Sept. 2019 – Line cook in Outback Steakhouse. Ocean City, MD.
 
-О себе:
+Awarded with best employee of the month.
 
-Увлекаюсь программированием, космонавтикой (в свободное время читаю и смотрю все новое из этой отрасли), играю в компьютерные игры, катаюсь на сноуборде, люблю путешествовать и вообще все новое.
+2)	June 2019. – Sept. 2019 – Grand Prix Amusements. Ocean City, MD.
+
+3)	Nov. 2020 – present. – Freelance .NET Developer. Created web application with database for VestPlast company.
+
+Technical Skills:
+
+I have experience of developing web application using ASP.NET Core technology with MVC pattern and MS SQL Server Express 2019 database for VestPlast company (https://vestplast.com), Moscow.  
+Currently I keep study C#, take ASP.NET Core courses from ITDVN and make another application and database for VestPlast.
+
+Database: MS SQL Server
+
+Languages & Technologies: C#, T-SQL, ASP.NET Core, Entity Framework Core, ADO.NET, HTML, CSS, Blazor
+
+Patterns: MVC
+
+Professional Skills:
+
+Skilled to research and finding any information crucial for development.
+
+Have good problem solving skills.
+
+Have a very strong social and team skills.
+
+I can quickly assimilate new information and fast in studying new things.
+
+Very responsible person and fully dedicated to thing I do. 
+
+About myself:
+
+I am fond of programming, astronautics (I read and watch everything new from this industry), play computer games, ride a snowboard, I like travelling and everything new in general. Have excellent knowledge of Russian language.
+
+
