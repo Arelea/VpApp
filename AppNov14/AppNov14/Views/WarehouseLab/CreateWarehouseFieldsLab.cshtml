@@ -1,12 +1,17 @@
 ﻿@model AppNov14.Models.Warehouse135Model
 
 @{
-    ViewData["Title"] = "Добавление полей склада";
+    ViewData["Title"] = "Добовление полей склада лаборатории";
 }
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/jquery/dist/jquery-ui.js"></script>
 <link href="~/jquery-ui.css" rel="stylesheet" />
-<h1>Добавление полей склада</h1>
+
+<div class="alert alert-danger">
+    <h1>Добовление полей склада лаборатории</h1>
+    <hr />
+</div>
+
 <script type="text/javascript">
 
     $(function () {
@@ -16,7 +21,7 @@
                     url: '/Warehouse135/GetNameTypesSecond',
                     type: 'POST',
                     cache: false,
-                    data: { type: $("#TypeOfMaterial").val(), Prefix: request.term, SubsType: 3},
+                    data: { type: $("#TypeOfMaterial").val(), Prefix: request.term, SubsType: 2},
                     dataType: 'json',
 
                     success: function (data) {
@@ -40,7 +45,7 @@
                     url: '/Warehouse135/GetProvider',
                     type: 'POST',
                     cache: false,
-                    data: { Prefix: request.term, SubsType: 3},
+                    data: { Prefix: request.term, SubsType: 2},
                     dataType: 'json',
                     success: function (data) {
                         response($.map(data, function (item) {
@@ -63,7 +68,7 @@
                     url: '/Warehouse135/GetManufacturer',
                     type: 'POST',
                     cache: false,
-                    data: { Prefix: request.term, SubsType: 3},
+                    data: { Prefix: request.term, SubsType: 2},
                     dataType: 'json',
                     success: function (data) {
                         response($.map(data, function (item) {
@@ -111,7 +116,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Сохранить" class="btn btn-primary" onclick="return confirm('Вы уверенны, что хотите добавить сырье на склад?')">
+                <input type="submit" value="Сохранить" class="btn btn-primary" onclick="return confirm('Вы уверенны, что хотите добавить?')">
             </div>
         </form>
     </div>

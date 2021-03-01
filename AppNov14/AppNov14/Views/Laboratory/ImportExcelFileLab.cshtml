@@ -1,0 +1,64 @@
+﻿@model AppNov14.Models.InnerModelToPost
+
+@{
+    ViewData["Title"] = "Excel File";
+}
+
+<div class="alert alert-danger">
+    <h1 class="text-center">Скачать эксель выписку из лаборотории</h1>
+    <hr />
+</div>
+<hr />
+<form asp-action="ImportExcelFileLab">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-row">
+        <div class="form-group col-md-4">
+            <label asp-for="DateStart" class="control-label">От</label>
+            <input asp-for="DateStart" type="date"
+                   min="2010-01-01" max="2050-12-31" class="form-control" />
+            <span asp-validation-for="DateStart" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-4">
+            <label asp-for="DateFinish" class="control-label">До</label>
+            <input asp-for="DateFinish" type="date"
+                   min="2010-01-01" max="2050-12-31" class="form-control" />
+            <span asp-validation-for="DateFinish" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-1">
+            <input type="submit" value="Найти" class="btn btn-primary">
+        </div>
+        <div class="form-group col-md-1">
+            <a class="btn btn-warning" asp-action="DownloadExcel" asp-route-dateStart="@Model.DateStart.ToString()" asp-route-dateFinish="@Model.DateFinish.ToString()">Скачать</a>
+        </div>
+        <div class="form-group col-md-1">
+            <a class="btn btn-outline-secondary" asp-controller="Laboratory" asp-action="Index">Назад</a>
+        </div>
+    </div>
+
+</form>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+@if (Model.Count == 0)
+{
+    <div class="is-invalid">
+        <h3 class="text-center">Записей нет</h3>
+    </div>
+}
+else
+{
+    @*int j = 0;
+        @for (int i = 0; i < Model.listil.Rows.Count; i++)
+        {
+            j++;
+
+        }*@
+
+    <div class="is-invalid">
+        <h3 class="text-center">Найденно @Model.Count записей</h3>
+    </div>
+
+}

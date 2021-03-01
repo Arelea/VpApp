@@ -212,7 +212,7 @@ else
                     $("#TypeOfMaterial").val("0");
                 }
                 else {
-                    $.getJSON("/Search/GetNameTypesSearchJson", { type: $("#TypeOfMaterial").val() }, function (d) {
+                    $.getJSON("/Search/GetNameTypesSearchJson", { type: $("#TypeOfMaterial").val(), subsType: 1 }, function (d) {
                         $("#NameOfTypeMaterial").prop('disabled', false);
                         $("#NameOfTypeMaterial").empty();
                         $("#NameOfTypeMaterial").append($('<option/>', { value: '@null', text: '--Не выбрано--' }));

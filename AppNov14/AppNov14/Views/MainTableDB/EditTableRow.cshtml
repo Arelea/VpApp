@@ -139,7 +139,7 @@ else
                 $("#TypeOfMaterial").val("@null");
             }
             else {
-                $.getJSON("/MainTableDB/GetNameTypes", { type: $("#TypeOfMaterial").val() }, function (d) {
+                $.getJSON("/MainTableDB/GetNameTypes", { type: $("#TypeOfMaterial").val(), subsType: 1}, function (d) {
                     $("#NameOfTypeMaterial").prop('disabled', false);
                     $("#NameOfTypeMaterial").empty();
                     $("#NameOfTypeMaterial").append($('<option/>', { value: '@null', text: '--Select--' }));
@@ -160,7 +160,7 @@ else
                 $("#NameOfTypeMaterial").val("@null");
             }
             else {
-                $.getJSON("/MainTableDB/GetProvider", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val() }, function (d) {
+                $.getJSON("/MainTableDB/GetProvider", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), subsType: 1}, function (d) {
                     $("#Provider").prop('disabled', false);
                     $("#Provider").empty();
                     $("#Provider").append($('<option/>', { value: '@null', text: '--Select--' }));
@@ -181,7 +181,7 @@ else
                 $("#Provider").val("@null");
             }
             else {
-                $.getJSON("/MainTableDB/GetManufacturer", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), provider: $("#Provider").val() }, function (d) {
+                $.getJSON("/MainTableDB/GetManufacturer", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), provider: $("#Provider").val(), subsType: 1}, function (d) {
                     $("#Manufacturer").prop('disabled', false);
                     $("#Manufacturer").empty();
                     $("#Manufacturer").append($('<option/>', { value: '@null', text: '--Select--' }));

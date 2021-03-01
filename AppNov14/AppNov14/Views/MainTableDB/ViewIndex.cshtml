@@ -1,0 +1,156 @@
+﻿@model AppNov14.Models.MainTableIndex
+
+@{
+    ViewData["Title"] = "Поиск";
+}
+
+
+<h1 class="text-center">Состав партии</h1>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery-ui.js"></script>
+<link href="~/jquery-ui.css" rel="stylesheet" />
+
+<form asp-action="ViewIndex">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="TypeOfMaterial" class="control-label">Тип материала</label>
+            <select asp-for="TypeOfMaterial" class="form-control" asp-items="@(new SelectList(ViewBag.TypeList, "Value", "Text"))"></select>
+            <span asp-validation-for="TypeOfMaterial" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="NameOfTypeMaterial" class="control-label">Наименование типа материала</label>
+            <select asp-for="NameOfTypeMaterial" class="form-control" asp-items="@(new SelectList(String.Empty, "Value", "Text"))"></select>
+            <span asp-validation-for="NameOfTypeMaterial" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Provider" class="control-label">Поставщик</label>
+            <select asp-for="Provider" class="form-control" asp-items="@(new SelectList(String.Empty, "Value", "Text"))"></select>
+            <span asp-validation-for="Provider" class="text-danger"></span>
+        </div>
+        <div class="form-group col-md-6">
+            <label asp-for="Manufacturer" class="control-label">Производитель</label>
+            <select asp-for="Manufacturer" class="form-control" asp-items="@(new SelectList(String.Empty, "Value", "Text"))"></select>
+            <span asp-validation-for="Manufacturer" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-1">
+            <input type="submit" value="Найти" class="btn btn-primary">
+        </div>
+        <div class="form-group col-md-1">
+            <a class="btn btn-outline-secondary" asp-controller="MainTableDB" asp-action="Index">Назад</a>
+        </div>
+    </div>
+</form>
+
+
+@if (Model.listil.Rows.Count == 0)
+{
+    <div class="is-invalid">
+        <h3 class="text-center">Данных о паспорте нету</h3>
+    </div>
+}
+else
+{
+    <table align="center" class="table table-bordered">
+
+        <thead class="thead-dark">
+            <tr>
+                <th>
+                    Паспорт
+                </th>
+                <th>
+                    Количество
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (int i = 0; i < Model.listil.Rows.Count; i++)
+
+            {
+                <tr>
+                    <td>
+                        @Model.listil.Rows[i]["Indexation"]
+                    </td>
+                    <td>
+                        @Model.listil.Rows[i]["Leftovers"]
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+<script>
+
+        $(function () {
+            $("#TypeOfMaterial").change(function () {
+                if ($(this).val() == "@null") {
+                    $("#TypeOfMaterial").prop('disabled', true);
+                    $("#TypeOfMaterial").val("@null");
+                }
+                else {
+                    $.getJSON("/MainTableDB/GetNameTypes", { type: $("#TypeOfMaterial").val(), subsType: 1}, function (d) {
+                        $("#NameOfTypeMaterial").prop('disabled', false);
+                        $("#NameOfTypeMaterial").empty();
+                        $("#NameOfTypeMaterial").append($('<option/>', { value: '@null', text: '--Select--' }));
+                        $.each(d, function (i, v) {
+                            $("#NameOfTypeMaterial").append($('<option/>', { value: v.value, text: v.value }));
+                        });
+                        $("#Manufacturer").empty();
+                        $("#Provider").empty();
+                    })
+                }
+
+            })
+        })
+
+        $(function () {
+            $("#NameOfTypeMaterial").change(function () {
+                if ($(this).val() == "@null") {
+                    $("#NameOfTypeMaterial").prop('disabled', true);
+                    $("#NameOfTypeMaterial").val("@null");
+                }
+                else {
+                    $.getJSON("/MainTableDB/GetProvider", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), subsType: 1}, function (d) {
+                        $("#Provider").prop('disabled', false);
+                        $("#Provider").empty();
+                        $("#Provider").append($('<option/>', { value: '@null', text: '--Select--' }));
+                        $.each(d, function (i, v) {
+                            $("#Provider").append($('<option/>', { value: v.value, text: v.value }));
+                        });
+                        $("#Manufacturer").empty();
+                    })
+                }
+
+            })
+        })
+
+        $(function () {
+            $("#Provider").change(function () {
+                if ($(this).val() == "@null") {
+                    $("#Provider").prop('disabled', true);
+                    $("#Provider").val("@null");
+                }
+                else {
+                    $.getJSON("/MainTableDB/GetManufacturer", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), provider: $("#Provider").val(), subsType: 1 }, function (d) {
+                        $("#Manufacturer").prop('disabled', false);
+                        $("#Manufacturer").empty();
+                        $("#Manufacturer").append($('<option/>', { value: '@null', text: '--Select--' }));
+                        $.each(d, function (i, v) {
+                            $("#Manufacturer").append($('<option/>', { value: v.value, text: v.value }));
+                        });
+                    })
+                }
+
+            })
+        })
+
+</script>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

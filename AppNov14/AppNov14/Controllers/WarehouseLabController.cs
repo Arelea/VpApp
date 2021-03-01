@@ -39,7 +39,7 @@ namespace AppNov14.Controllers
                 {
                     connection.Open();
                     SqlDataAdapter dataAdapter = new SqlDataAdapter("JQ_MultiController_GetDistinct_TypeOfMaterial", connection);
-                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", 3);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", 2);
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }

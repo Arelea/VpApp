@@ -34,7 +34,9 @@ namespace AppNov14.Models
         public DateTime DateStart { get; set; }
 
         public DateTime DateFinish { get; set; }
-        
+
+        public bool TurnTable { get; set; }
+
         public List<SelectListItem> listyType { get; set; }
         public List<SelectListItem> listyNameType { get; set; }
         public List<SelectListItem> listyProvider { get; set; }

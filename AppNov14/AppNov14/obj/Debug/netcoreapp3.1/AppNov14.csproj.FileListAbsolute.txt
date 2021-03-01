@@ -217,3 +217,12 @@ D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\Laboratory\
 D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\WarehouseLab\WarehouseViewLab.cshtml.g.cs
 D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\WarehouseLab\CreateWarehouseFieldsLab.cshtml.g.cs
 D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\WarehouseLab\CreateWarehouseFieldTypeLab.cshtml.g.cs
+D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\Laboratory\EditDeleteAllDataLab.cshtml.g.cs
+D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\Laboratory\DeleteTableRowLab.cshtml.g.cs
+D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\Laboratory\EditTableRowLab.cshtml.g.cs
+D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\Laboratory\ImportExcelFileLab.cshtml.g.cs
+D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\Laboratory\GetPartiesInfoLab.cshtml.g.cs
+D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\Search\IndexLab.cshtml.g.cs
+D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\Search\SerachInIncomingOrderLab.cshtml.g.cs
+D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\Search\SerachInOutcomingOrderLab.cshtml.g.cs
+D:\ASPProjects\AppNov14\AppNov14\obj\Debug\netcoreapp3.1\Razor\Views\MainTableDB\ViewIndex.cshtml.g.cs

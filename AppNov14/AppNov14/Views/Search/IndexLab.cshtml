@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Лабораторный поиск";
+}
+
+<div class="alert alert-danger">
+    <h1 class="text-center">Лабораторный поиск</h1>
+    <hr />
+</div>
+<hr />
+
+<div class="form-row">
+    <div class="form-group col-md-3">
+        <a class="btn btn-outline-dark" asp-controller="Search" asp-action="SerachInIncomingOrderLab">Поиск по приходному сырью</a>
+        <hr />
+        <a class="btn btn-outline-dark" asp-controller="Search" asp-action="SerachInOutcomingOrderLab">Поиск по расходному сырью</a>
+    </div>
+</div>
+<hr />

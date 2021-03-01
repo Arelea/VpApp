@@ -30,6 +30,7 @@ namespace AppNov14.Models
         [Required]
         public string Manufacturer { get; set; }
 
+        [Required]
         public string Document { get; set; }
 
         [Required]
@@ -51,10 +52,17 @@ namespace AppNov14.Models
 
         public int OperationType { get; set; }
 
+        
+
         public List<SelectListItem> listyNameType { get; set; }
         public List<SelectListItem> listyProvider { get; set; }
         public List<SelectListItem> listyManufacturer { get; set; }
         public List<SelectListItem> listyParties { get; set; }
         public List<SelectListItem> listyPartiesNames { get; set; }
+    }
+
+    public class LaboratoryParties : MainTableParties
+    {
+        
     }
 }

@@ -56,7 +56,7 @@
         </div>
         <div class="form-group col-md-6">
             <label asp-for="Indexation" class="control-label">Паспорт</label>
-            <input asp-for="Indexation" class="form-control" />
+            <select asp-for="Indexation" class="form-control" asp-items="@(new SelectList(String.Empty, "Value", "Text"))"></select>
             <span asp-validation-for="Indexation" class="text-danger"></span>
         </div>
         <div class="form-group col-md-6">
@@ -95,13 +95,14 @@
                 $("#TypeOfMaterial").val("@null");
             }
             else {
-                $.getJSON("/MainTableDB/GetNameTypes", { type: $("#TypeOfMaterial").val() }, function (d) {
+                $.getJSON("/MainTableDB/GetNameTypes", { type: $("#TypeOfMaterial").val(), subsType: 1 }, function (d) {
                     $("#NameOfTypeMaterial").prop('disabled', false);
                     $("#NameOfTypeMaterial").empty();
                     $("#NameOfTypeMaterial").append($('<option/>', { value: '@null', text: '--Select--' }));
                     $.each(d, function (i, v) {
                         $("#NameOfTypeMaterial").append($('<option/>', { value: v.value, text: v.value }));
                     });
+                    $("#Indexation").empty();
                     $("#Manufacturer").empty();
                     $("#Provider").empty();
                 })
@@ -117,7 +118,7 @@
                 $("#NameOfTypeMaterial").val("@null");
             }
             else {
-                $.getJSON("/MainTableDB/GetProvider", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val() }, function (d) {
+                $.getJSON("/MainTableDB/GetProvider", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), subsType: 1}, function (d) {
                     $("#Provider").prop('disabled', false);
                     $("#Provider").empty();
                     $("#Provider").append($('<option/>', { value: '@null', text: '--Select--' }));
@@ -138,7 +139,7 @@
                 $("#Provider").val("@null");
             }
             else {
-                $.getJSON("/MainTableDB/GetManufacturer", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), provider: $("#Provider").val() }, function (d) {
+                $.getJSON("/MainTableDB/GetManufacturer", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), provider: $("#Provider").val(), subsType: 1}, function (d) {
                     $("#Manufacturer").prop('disabled', false);
                     $("#Manufacturer").empty();
                     $("#Manufacturer").append($('<option/>', { value: '@null', text: '--Select--' }));
@@ -151,6 +152,25 @@
         })
     })
 
+    $(function () {
+        $("#Manufacturer").change(function () {
+            if ($(this).val() == "@null") {
+                $("#Manufacturer").prop('disabled', true);
+                $("#Manufacturer").val("@null");
+            }
+            else {
+                $.getJSON("/MainTableDB/GetIndexation", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), provider: $("#Provider").val(), manufacturer: $("#Manufacturer").val(), subsType: 1}, function (d) {
+                    $("#Indexation").prop('disabled', false);
+                    $("#Indexation").empty();
+                    $("#Indexation").append($('<option/>', { value: '@null', text: '--Select--' }));
+                    $.each(d, function (i, v) {
+                        $("#Indexation").append($('<option/>', { value: v.value, text: v.value }));
+                    });
+                })
+            }
+
+        })
+    })
 </script>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

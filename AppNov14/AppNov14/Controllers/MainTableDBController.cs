@@ -61,7 +61,7 @@ namespace AppNov14.Controllers
         // Начало. Получение уникаольных значений имени типа материала для JQuery Cascade Dropdown list
 
         [NonAction]
-        public DataSet GetNameOfTypeMaterialDB(string type)
+        public DataSet GetNameOfTypeMaterialDB(string type, int SubsType)
         {
             DataSet dataset = new DataSet();
             try
@@ -71,7 +71,7 @@ namespace AppNov14.Controllers
                     connection.Open();
                     SqlDataAdapter dataAdapter = new SqlDataAdapter("JQ_MultiController_GetDistinct_NameOfTypeMaterial_DependentByTypeOfMaterial", connection);
                     dataAdapter.SelectCommand.Parameters.AddWithValue("in_TypeOfMaterial", type);
-                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", 1);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", SubsType);
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }
@@ -89,7 +89,7 @@ namespace AppNov14.Controllers
         // Начало. Получение уникаольных значений поставщика (провайдера) для JQuery Cascade Dropdown list
 
         [NonAction]
-        public DataSet GetProviderDB(string type, string typename)
+        public DataSet GetProviderDB(string type, string typename, int SubsType)
         {
             try
             {
@@ -100,6 +100,7 @@ namespace AppNov14.Controllers
                     SqlDataAdapter dataAdapter = new SqlDataAdapter("ProviderV1ProcedureForJQuery", connection);
                     dataAdapter.SelectCommand.Parameters.AddWithValue("incomin_TypeOfMaterial", type);
                     dataAdapter.SelectCommand.Parameters.AddWithValue("incomin_NameOfTypeMaterial", typename);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", SubsType);
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }
@@ -117,7 +118,7 @@ namespace AppNov14.Controllers
         // Начало. Получение уникаольных значений производителя (Manufacturer) для JQuery Cascade Dropdown list
 
         [NonAction]
-        public DataSet GetManufacturerDB(string type, string typename, string provider)
+        public DataSet GetManufacturerDB(string type, string typename, string provider, int SubsType)
         {
             try
             {
@@ -126,9 +127,41 @@ namespace AppNov14.Controllers
                 {
                     connection.Open();
                     SqlDataAdapter dataAdapter = new SqlDataAdapter("ManufacturerV1ProcedureForJQuery", connection);
-                    dataAdapter.SelectCommand.Parameters.AddWithValue("incomin_TypeOfMaterial", type);
-                    dataAdapter.SelectCommand.Parameters.AddWithValue("incomin_NameOfTypeMaterial", typename);
-                    dataAdapter.SelectCommand.Parameters.AddWithValue("incomin_Provider", provider);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_TypeOfMaterial", type);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_NameOfTypeMaterial", typename);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_Provider", provider);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", SubsType);
+                    dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    dataAdapter.Fill(dataset);
+                }
+                return dataset;
+            }
+            catch (SqlException ex)
+            {
+                throw ex;
+            }
+        }
+
+        // Конец
+        //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+        // Начало. Получение уникаольных значений производителя (Manufacturer) для JQuery Cascade Dropdown list
+
+        [NonAction]
+        public DataSet GetIndexationDB(string type, string typename, string provider, string manufacturer, int subsType)
+        {
+            try
+            {
+                DataSet dataset = new DataSet();
+                using (SqlConnection connection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
+                {
+                    connection.Open();
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter("JQ_MainTableDB_GetIndexation", connection);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_TypeOfMaterial", type);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_NameOfTypeMaterial", typename);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_Provider", provider);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_Manufacturer", manufacturer);
+                    dataAdapter.SelectCommand.Parameters.AddWithValue("in_SubsType", subsType);
                     dataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure;
                     dataAdapter.Fill(dataset);
                 }
@@ -146,9 +179,9 @@ namespace AppNov14.Controllers
         // Начало. Json для имени типа материала для JQuery Cascade Dropdown list
 
         [HttpGet]
-        public JsonResult GetNameTypes(string type)
+        public JsonResult GetNameTypes(string type, int subsType)
         {
-            DataSet dataset = GetNameOfTypeMaterialDB(type);
+            DataSet dataset = GetNameOfTypeMaterialDB(type, subsType);
             List<SelectListItem> selectListItems1 = new List<SelectListItem>();
             foreach (DataRow item in dataset.Tables[0].Rows)
             {
@@ -163,9 +196,9 @@ namespace AppNov14.Controllers
         // Начало. Json для поставщика (Провайдера) для JQuery Cascade Dropdown list
 
         [HttpGet]
-        public JsonResult GetProvider(string type, string typename)
+        public JsonResult GetProvider(string type, string typename, int subsType)
         {
-            DataSet dataset = GetProviderDB(type, typename);
+            DataSet dataset = GetProviderDB(type, typename, subsType);
             List<SelectListItem> selectListItems2 = new List<SelectListItem>();
             foreach (DataRow item in dataset.Tables[0].Rows)
             {
@@ -180,15 +213,32 @@ namespace AppNov14.Controllers
         // Начало. Json для производителя (Manufacturer) для JQuery Cascade Dropdown list
 
         [HttpGet]
-        public JsonResult GetManufacturer(string type, string typename, string provider)
+        public JsonResult GetManufacturer(string type, string typename, string provider, int subsType)
         {
-            DataSet dataset = GetManufacturerDB(type, typename, provider);
+            DataSet dataset = GetManufacturerDB(type, typename, provider, subsType);
             List<SelectListItem> selectListItems3 = new List<SelectListItem>();
             foreach (DataRow item in dataset.Tables[0].Rows)
             {
                 selectListItems3.Add(new SelectListItem { Value = item["Manufacturer"].ToString() , Text= item["Manufacturer"].ToString() });
             }
             return Json(selectListItems3);
+        }
+
+        // Конец
+        //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+        // Начало. Json для идексации (Indexation) для JQuery Cascade Dropdown list
+
+        [HttpGet]
+        public JsonResult GetIndexation(string type, string typename, string provider, string manufacturer, int subsType)
+        {
+            DataSet dataset = GetIndexationDB(type, typename, provider, manufacturer, subsType);
+            List<SelectListItem> selectListItems4 = new List<SelectListItem>();
+            foreach (DataRow item in dataset.Tables[0].Rows)
+            {
+                selectListItems4.Add(new SelectListItem { Value = item["Indexation"].ToString(), Text = item["Indexation"].ToString() });
+            }
+            return Json(selectListItems4);
         }
 
         // Конец
@@ -464,8 +514,8 @@ namespace AppNov14.Controllers
                 await using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     sqlConnection.Open();
-                    SqlDataAdapter sqlDA = new SqlDataAdapter("ShowEmployeeLastData", sqlConnection);
-                    sqlDA.SelectCommand.Parameters.AddWithValue("incoming_Employee", User.Identity.Name);
+                    SqlDataAdapter sqlDA = new SqlDataAdapter("BasApp_MainTableDB_ShowEmpLastData", sqlConnection);
+                    sqlDA.SelectCommand.Parameters.AddWithValue("in_Employee", User.Identity.Name);
                     sqlDA.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sqlDA.Fill(tdbl);
                 }
@@ -477,7 +527,7 @@ namespace AppNov14.Controllers
         // Конец
         //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
-        // Начало. Вьюха последних 20 добавлений всех сотрудников
+        // Начало. Вьюха последних 25 добавлений всех сотрудников
 
         [HttpGet]
         public async Task<IActionResult> EveryoneLastAddings()
@@ -488,7 +538,7 @@ namespace AppNov14.Controllers
                 await using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
                     sqlConnection.Open();
-                    SqlDataAdapter sqlDA = new SqlDataAdapter("ShowAllLastData", sqlConnection);          
+                    SqlDataAdapter sqlDA = new SqlDataAdapter("BasApp_MainTableDB_ShowData", sqlConnection);          
                     sqlDA.SelectCommand.CommandType = CommandType.StoredProcedure;             
                     sqlDA.Fill(tdbl);                 
                 }
@@ -513,17 +563,18 @@ namespace AppNov14.Controllers
                 {
                     dateStart = DateTime.Now.AddMonths(-1);
                     dateFinish = DateTime.Now.AddDays(1);
-                    numberOfRecords = 50;
+                    numberOfRecords = 200;
                 }
                                  
                 DataTable tdbl = new DataTable();
                 using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {                     
                     sqlConnection.Open();
-                    SqlDataAdapter sqlDA = new SqlDataAdapter("ShowDataForEditOrDeleteOperation", sqlConnection);
-                    sqlDA.SelectCommand.Parameters.AddWithValue("incoming_Id", numberOfRecords);
-                    sqlDA.SelectCommand.Parameters.AddWithValue("incoming_DateStart", dateStart);
-                    sqlDA.SelectCommand.Parameters.AddWithValue("incoming_DateFinish", dateFinish);
+                    SqlDataAdapter sqlDA = new SqlDataAdapter("BasApp_MultiController_ShowDataForEditOrDelete", sqlConnection);
+                    sqlDA.SelectCommand.Parameters.AddWithValue("in_Id", numberOfRecords);
+                    sqlDA.SelectCommand.Parameters.AddWithValue("in_DateStart", dateStart);
+                    sqlDA.SelectCommand.Parameters.AddWithValue("in_DateFinish", dateFinish);
+                    sqlDA.SelectCommand.Parameters.AddWithValue("in_SubsType", 1);
                     sqlDA.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sqlDA.Fill(tdbl);
                 }
@@ -581,7 +632,7 @@ namespace AppNov14.Controllers
             }
             ViewBag.TypeList = selectListItems;
 
-            DataSet datasetTypeName = GetNameOfTypeMaterialDB(TableViewModel.TypeOfMaterial);
+            DataSet datasetTypeName = GetNameOfTypeMaterialDB(TableViewModel.TypeOfMaterial, 1);
             List<SelectListItem> selectListItemsTypeName = new List<SelectListItem>();
             foreach (DataRow item in datasetTypeName.Tables[0].Rows)
             {
@@ -589,7 +640,7 @@ namespace AppNov14.Controllers
             }
             TableViewModel.listyNameType = selectListItemsTypeName;
 
-            DataSet datasetProvider = GetProviderDB(TableViewModel.TypeOfMaterial, TableViewModel.NameOfTypeMaterial);
+            DataSet datasetProvider = GetProviderDB(TableViewModel.TypeOfMaterial, TableViewModel.NameOfTypeMaterial, 1);
             List<SelectListItem> selectListItemsProvider = new List<SelectListItem>();
             foreach (DataRow item in datasetProvider.Tables[0].Rows)
             {
@@ -597,7 +648,7 @@ namespace AppNov14.Controllers
             }
             TableViewModel.listyProvider = selectListItemsProvider;
 
-            DataSet datasetManufacturer = GetManufacturerDB(TableViewModel.TypeOfMaterial, TableViewModel.NameOfTypeMaterial, TableViewModel.Provider);
+            DataSet datasetManufacturer = GetManufacturerDB(TableViewModel.TypeOfMaterial, TableViewModel.NameOfTypeMaterial, TableViewModel.Provider, 1);
             List<SelectListItem> selectListItemsManufacturer = new List<SelectListItem>();
             foreach (DataRow item in datasetManufacturer.Tables[0].Rows)
             {
@@ -757,7 +808,8 @@ namespace AppNov14.Controllers
                    
                     sqlConnection.Open();
                     SqlDataAdapter sqlDA = new SqlDataAdapter("ViewRecordById", sqlConnection);
-                    sqlDA.SelectCommand.Parameters.AddWithValue("incoming_Id", id);               
+                    sqlDA.SelectCommand.Parameters.AddWithValue("in_Id", id);
+                    sqlDA.SelectCommand.Parameters.AddWithValue("in_SubsType", 1);
                     sqlDA.SelectCommand.CommandType = CommandType.StoredProcedure;
                     sqlDA.Fill(dataTable);
                     if (dataTable.Rows.Count == 1)
@@ -823,7 +875,7 @@ namespace AppNov14.Controllers
                     dateFinish = DateTime.Now.AddDays(1);
                 }
 
-                int HalfTime = 0;
+                int count = 0;
 
                 using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
                 {
@@ -832,16 +884,17 @@ namespace AppNov14.Controllers
                     {
                         CommandType = CommandType.StoredProcedure
                     };
-                    cmd.Parameters.AddWithValue("incomin_DateStart", dateStart);
-                    cmd.Parameters.AddWithValue("incomin_DateFinish", dateFinish);
+                    cmd.Parameters.AddWithValue("in_DateStart", dateStart);
+                    cmd.Parameters.AddWithValue("in_DateFinish", dateFinish);
+                    cmd.Parameters.AddWithValue("in_SubsType", 1);
 
-                    SqlParameter parameter = cmd.Parameters.Add("Count", SqlDbType.Int);
+                    SqlParameter parameter = cmd.Parameters.Add("out_Count", SqlDbType.Int);
                     parameter.Direction = ParameterDirection.ReturnValue;
                     await cmd.ExecuteNonQueryAsync();
-                    HalfTime = (int)cmd.Parameters["Count"].Value;                           
+                    count = (int)cmd.Parameters["out_Count"].Value;                           
                 }
                 
-                TableViewModel.Count = HalfTime;
+                TableViewModel.Count = count;
                 TableViewModel.DateStart = dateStart;
                 TableViewModel.DateFinish = dateFinish;
 
@@ -922,7 +975,7 @@ namespace AppNov14.Controllers
             }
 
             stream.Position = 0;
-            string excelname = $"VestPlast.Data.{DateTime.Now}.xlsx";
+            string excelname = $"VestPlast.DataProd.{DateTime.Now}.xlsx";
 
             return File(stream, "application/vnd.openformats-officedocument.spreadsheetml.sheet", excelname);       
         }
@@ -1123,9 +1176,64 @@ namespace AppNov14.Controllers
 
         // Конец
         //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        
+        [HttpGet]
+        public IActionResult ViewIndex(string TypeOfMaterial, string NameOfTypeMaterial, string Provider, string Manufacturer)
+        {
+            MainTableIndex TableViewModel = new MainTableIndex();
+            DataSet dataset = GetTypeOfMaterialDB();
+            List<SelectListItem> selectListItems = new List<SelectListItem>();
+            foreach (DataRow item in dataset.Tables[0].Rows)
+            {
+                selectListItems.Add(new SelectListItem { Value = item["TypeOfMaterial"].ToString(), Text = item["TypeOfMaterial"].ToString() });
+            }
+            ViewBag.TypeList = selectListItems;
+            
+                try
+                {
+                    DataTable tdbl = new DataTable();
+                    using (SqlConnection sqlConnection = new SqlConnection(_configuration.GetConnectionString("DefaultConnection2")))
+                    {
+                        sqlConnection.Open();
+                        SqlDataAdapter sqlDA = new SqlDataAdapter("BasApp_MainTableDB_GetIndexInfo", sqlConnection);
+                        sqlDA.SelectCommand.Parameters.AddWithValue("in_TypeOfMaterial", TypeOfMaterial ??= "Null");
+                        sqlDA.SelectCommand.Parameters.AddWithValue("in_NameOfTypeMaterial", NameOfTypeMaterial ??= "Null");
+                        sqlDA.SelectCommand.Parameters.AddWithValue("in_Provider", Provider ??= "Null");
+                        sqlDA.SelectCommand.Parameters.AddWithValue("in_Manufacturer", Manufacturer ??= "Null");
+                        sqlDA.SelectCommand.CommandType = CommandType.StoredProcedure;
+                        sqlDA.Fill(tdbl);
+                    }
+
+                TableViewModel.listil = tdbl;
+                    return View(TableViewModel);
+                }
+                catch (SqlException ex)
+                {
+                    throw ex;
+                }
+
+        }
+
+        // Конец
+        //_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 
+        // Начало. Пост добовления наименования партии
+
+        [HttpPost]
+        public IActionResult ViewIndex(MainTableIndex mainTableDB)
+        {
+            
+
+            if (ModelState.IsValid)
+            {
+                ViewIndex(mainTableDB.TypeOfMaterial, mainTableDB.NameOfTypeMaterial, mainTableDB.Provider, mainTableDB.Manufacturer);
+                return View();
+            }
+
+            return View(ModelState.ErrorCount);
+        }
     }
-
+    
 }
 

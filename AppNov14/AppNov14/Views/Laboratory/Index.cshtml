@@ -1,49 +1,54 @@
 ﻿@model AppNov14.Models.Laboratory
 
 @{
-    ViewData["Title"] = "Главное меню";
+    ViewData["Title"] = "Лаборатория";
 }
 
-<h1>Лаборатория</h1>
 
+<div class="alert alert-danger">
+    <h1>Лаборатория</h1>
+    <hr />
+</div>
 <br />
-<h3>Работа с базой</h3>
-<br />
-<a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="CreateIncomingOrderLab">Поступление нового сырья в лабораторию</a>
-<br />
-<hr />
-<a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="CreateOutcomingOrderLab">Списания сырья из лаборатории</a>
-<br />
-<hr />
-<a class="btn btn-sm btn-primary" asp-controller="WarehouseLab" asp-action="CreateWarehouseFieldsLab">Добавить новое наименование сырья</a>
-<br />
-<hr />
-@if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
- {
-    <a class="btn btn-sm btn-primary" asp-controller="WarehouseLab" asp-action="CreateWarehouseFieldTypeLab">Добавить новый тип сырья в лабораторию</a>
+<div class="alert alert-secondary">
+    <h3>Добавление данных</h3>
+    <br />
+    <a class="btn btn-outline-dark" asp-controller="Laboratory" asp-action="CreateIncomingOrderLab">Поступление нового сырья в лабораторию</a>
     <br />
     <hr />
-    <a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="EditDeleteAllData">Редактирование и удаление</a>
+    <a class="btn btn-outline-dark" asp-controller="Laboratory" asp-action="CreateOutcomingOrderLab">Списания сырья из лаборатории</a>
     <br />
     <hr />
- }
-
-<h3>Последние записи и склад</h3>
+    <a class="btn btn-outline-dark" asp-controller="WarehouseLab" asp-action="CreateWarehouseFieldsLab">Добавить новое наименование сырья</a>
+    <br />
+    <hr />
+    @if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
+    {
+        <a class="btn btn-outline-dark" asp-controller="WarehouseLab" asp-action="CreateWarehouseFieldTypeLab">Добавить новый тип сырья в лабораторию</a>
+        <br />
+        <hr />
+        <a class="btn btn-outline-dark" asp-controller="Laboratory" asp-action="EditDeleteAllDataLab">Редактирование и удаление</a>
+        <br />
+        <hr />
+    }
+</div>
 <br />
-<a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="LastAddingsLab">Последние записи</a>
-<br />
-<hr />
-<a class="btn btn-sm btn-primary" asp-controller="WarehouseLab" asp-action="WarehouseViewLab">Склад лабораторного сырья</a>
-<br />
-<hr />
-<h3>Поиск и Excel выписка</h3>
-<br />
-<a class="btn btn-sm btn-primary" asp-controller="Search" asp-action="Index">Поиск</a>
-<br />
-<hr />
-<a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="ImportExcelFile">Excel выписка</a>
-<br />
-<hr />
-<a class="btn btn-sm btn-primary" asp-controller="Laboratory" asp-action="GetPartiesInfo">Состав партии</a>
-<br />
-<hr />
+<div class="alert alert-secondary">
+    <h3>Просмотр данных</h3>
+    <br />
+    <a class="btn btn-outline-dark" asp-controller="Laboratory" asp-action="LastAddingsLab">Последние записи</a>
+    <br />
+    <hr />
+    <a class="btn btn-outline-dark" asp-controller="WarehouseLab" asp-action="WarehouseViewLab">Склад лабораторного сырья</a>
+    <br />
+    <hr />
+    <a class="btn btn-outline-dark" asp-controller="Search" asp-action="IndexLab">Поиск</a>
+    <br />
+    <hr />
+    <a class="btn btn-outline-dark" asp-controller="Laboratory" asp-action="ImportExcelFileLab">Excel выписка</a>
+    <br />
+    <hr />
+    <a class="btn btn-outline-dark" asp-controller="Laboratory" asp-action="GetPartiesInfoLab">Состав партии</a>
+    <br />
+    <hr />
+</div>

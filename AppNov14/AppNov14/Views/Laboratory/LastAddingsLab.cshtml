@@ -3,20 +3,20 @@
 @{
     ViewData["Title"] = "Последние записи";
 }
-
+    <div class="alert alert-danger">
+        <h1 class="text-center">Лаборатория</h1>
+        <hr />
+    </div>
+    <hr />
 <div class="jumbotron">
     <h1 class="text-center">Последние записи</h1>
 </div>
-
 <table align="center" class="table table-bordered">
 
     <thead class="thead-dark">
         <tr>
             <th>
                 #Id
-            </th>
-            <th>
-                Цех
             </th>
             <th>
                 Тип материала
@@ -37,16 +37,13 @@
                 Производитель
             </th>
             <th>
-                ТТН / Наименование партии
+                Наименование партии
             </th>
             <th>
-                Номер документа / Номер партии
+                Номер партии
             </th>
             <th>
                 Паспорт
-            </th>
-            <th>
-                Линия
             </th>
             <th>
                 Дата документа
@@ -78,15 +75,11 @@
                     @Model.Rows[i]["Id"]
                 </td>
                 <td>
-                    @Model.Rows[i]["Gild"]
-                </td>
-                <td>
                     @Model.Rows[i]["TypeOfMaterial"]
                 </td>
                 <td>
                     @Model.Rows[i]["NameOfTypeMaterial"]
                 </td>
-
                 <td>
                     @Model.Rows[i]["Quantity"]
                 </td>
@@ -107,9 +100,6 @@
                 </td>
                 <td>
                     @Model.Rows[i]["Indexation"]
-                </td>
-                <td>
-                    @Model.Rows[i]["Line"]
                 </td>
                 <td>
                     @Model.Rows[i]["DocDate"]
@@ -134,10 +124,6 @@
                     else if (@Model.Rows[i]["OperationType"].ToString() == "2")
                     {
                         Write("Расход");
-                    }
-                    else if (@Model.Rows[i]["OperationType"].ToString() == "3")
-                    {
-                        Write("Возврат");
                     }
                     else
                     {

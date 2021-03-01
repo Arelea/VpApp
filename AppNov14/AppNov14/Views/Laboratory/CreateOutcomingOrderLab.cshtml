@@ -1,10 +1,12 @@
 ﻿@model AppNov14.Models.Laboratory
 
 @{
-    ViewData["Title"] = "Списания сырья на производство";
+    ViewData["Title"] = "Списания сырья из лаборатории";
 }
-
-<h1>Списания сырья на производство</h1>
+<div class="alert alert-danger">
+    <h1>Списания сырья из лаборатории</h1>
+    <hr />
+</div>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <hr />
 <form asp-action="CreateOutcomingOrderLab" autocomplete="on">
@@ -15,12 +17,13 @@
             <input asp-for="Quantity" class="form-control" autocomplete="off" />
             <span asp-validation-for="Quantity" class="text-danger"></span>
         </div>
-        <div class="form-group col-md-6">
-            <label asp-for="Document" class="control-label">Наименование партии</label>
-            <select asp-for="Document" class="form-control" asp-items="@(new SelectList(Model.listyPartiesNames, "Value", "Text"))"></select>
-            <span asp-validation-for="Document" class="text-danger"></span>
-        </div>
     </div>
+    @*<div class="form-row">
+        <div class="form-group col-md-6">
+            <span class="d-block p-2 bg-secondary text-white">d-block</span>
+        </div>
+    </div>*@   
+    <hr />
     <div class="form-row">
         <div class="form-group col-md-6">
             <label asp-for="TypeOfMaterial" class="control-label">Тип материала</label>
@@ -43,7 +46,13 @@
             <span asp-validation-for="Manufacturer" class="text-danger"></span>
         </div>
     </div>
+    <hr />
     <div class="form-row">
+        <div class="form-group col-md-6">
+            <label asp-for="Document" class="control-label">Наименование партии</label>
+            <select asp-for="Document" class="form-control" asp-items="@(new SelectList(Model.listyPartiesNames, "Value", "Text"))"></select>
+            <span asp-validation-for="Document" class="text-danger"></span>
+        </div>
         <div class="form-group col-md-6">
             <label asp-for="NumberOfDocument" class="control-label">Номер партии</label>
             <input asp-for="NumberOfDocument" class="form-control" />
@@ -54,8 +63,6 @@
             <input asp-for="Indexation" class="form-control" />
             <span asp-validation-for="Indexation" class="text-danger"></span>
         </div>
-    </div>
-    <div class="form-row">
         <div class="form-group">
             <label asp-for="DocDate" class="control-label">Дата</label>
             <input asp-for="DocDate" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")"
@@ -72,7 +79,7 @@
     </div>
     <div class="form-row">
         <div class="form-group">
-            <input type="submit" value="Сохранить" class="btn btn-primary" onclick="return confirm('Вы уверенны, что хотите списать сырье со склада?')">
+            <input type="submit" value="Сохранить" class="btn btn-primary" onclick="return confirm('Вы уверенны, что хотите списать сырье с лаборатории?')">
         </div>
     </div>
 </form>
@@ -85,18 +92,18 @@
                 $("#TypeOfMaterial").val("@null");
             }
             else {
-                $.getJSON("/MainTableDB/GetNameTypes", { type: $("#TypeOfMaterial").val() }, function (d) {
+                $.getJSON("/MainTableDB/GetNameTypes", { type: $("#TypeOfMaterial").val(), subsType: 3}, function (d) {
                     $("#NameOfTypeMaterial").prop('disabled', false);
                     $("#NameOfTypeMaterial").empty();
                     $("#NameOfTypeMaterial").append($('<option/>', { value: '@null', text: '--Select--' }));
                     $.each(d, function (i, v) {
                         $("#NameOfTypeMaterial").append($('<option/>', { value: v.value, text: v.value }));
                     });
+                    $("#Indexation").empty();
                     $("#Manufacturer").empty();
                     $("#Provider").empty();
                 })
-            }
-
+            }           
         })
     })
 
@@ -107,13 +114,14 @@
                 $("#NameOfTypeMaterial").val("@null");
             }
             else {
-                $.getJSON("/MainTableDB/GetProvider", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val() }, function (d) {
+                $.getJSON("/MainTableDB/GetProvider", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), subsType: 3}, function (d) {
                     $("#Provider").prop('disabled', false);
                     $("#Provider").empty();
                     $("#Provider").append($('<option/>', { value: '@null', text: '--Select--' }));
                     $.each(d, function (i, v) {
                         $("#Provider").append($('<option/>', { value: v.value, text: v.value }));
                     });
+                    $("#Indexation").empty();
                     $("#Manufacturer").empty();
                 })
             }
@@ -128,18 +136,39 @@
                 $("#Provider").val("@null");
             }
             else {
-                $.getJSON("/MainTableDB/GetManufacturer", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), provider: $("#Provider").val() }, function (d) {
+                $.getJSON("/MainTableDB/GetManufacturer", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), provider: $("#Provider").val(), subsType: 3}, function (d) {
                     $("#Manufacturer").prop('disabled', false);
                     $("#Manufacturer").empty();
                     $("#Manufacturer").append($('<option/>', { value: '@null', text: '--Select--' }));
                     $.each(d, function (i, v) {
                         $("#Manufacturer").append($('<option/>', { value: v.value, text: v.value }));
                     });
+                    $("#Indexation").empty();
                 })
             }
 
         })
     })
+
+    @*$(function () {
+        $("#Manufacturer").change(function () {
+            if ($(this).val() == "@null") {
+                $("#Manufacturer").prop('disabled', true);
+                $("#Manufacturer").val("@null");
+            }
+            else {
+                $.getJSON("/MainTableDB/GetIndexation", { type: $("#TypeOfMaterial").val(), typename: $("#NameOfTypeMaterial").val(), provider: $("#Provider").val(), manufacturer: $("#Manufacturer").val(), subsType: 3}, function (d) {
+                    $("#Indexation").prop('disabled', false);
+                    $("#Indexation").empty();
+                    $("#Indexation").append($('<option/>', { value: '@null', text: '--Select--' }));
+                    $.each(d, function (i, v) {
+                        $("#Indexation").append($('<option/>', { value: v.value, text: v.value }));
+                    });
+                })
+            }
+
+        })
+    })*@
 
 </script>
 @section Scripts {

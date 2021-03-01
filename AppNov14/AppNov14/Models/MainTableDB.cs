@@ -134,4 +134,21 @@ namespace AppNov14.Models
         public DataTable listil { get; set; }
         public List<SelectListItem> listyParties { get; set; }
     }
+
+    public class MainTableIndex
+    {
+        [Required]
+        public string TypeOfMaterial { get; set; }
+
+        [Required]
+        public string NameOfTypeMaterial { get; set; }
+
+        [Required]
+        public string Provider { get; set; }
+
+        [Required]
+        public string Manufacturer { get; set; }
+
+        public DataTable listil { get; set; }
+    }
 }
